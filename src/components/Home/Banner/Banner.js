@@ -9,7 +9,8 @@ const Banner = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 3000,
+        autoplay: true,
         slidesToShow: 1,
         slidesToScroll: 1
     };

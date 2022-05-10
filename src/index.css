@@ -7,6 +7,14 @@
   .container {
     @apply w-4/5 mx-auto
   }
+
+  .social-icon {
+    @apply w-8 h-8 text-lg text-gray-500 rounded-full bg-white ring-1 ring-gray-500
+  }
+
+  .heading {
+    @apply text-2xl font-bold text-center text-slate-700 mt-3 py-2 border-b border-gray-200
+  }
 }
 
 body {
