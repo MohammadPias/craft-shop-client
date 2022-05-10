@@ -18,22 +18,22 @@ const Footer = () => {
                             </div>
                             <div className="flex items-center justify-center social-icon">
                                 <Link to='#'>
-                                    <i class="fa-brands fa-twitter"></i>
+                                    <i className="fa-brands fa-twitter"></i>
                                 </Link>
                             </div>
                             <div className="flex items-center justify-center social-icon">
                                 <Link to='#'>
-                                    <i class="fa-brands fa-instagram"></i>
+                                    <i className="fa-brands fa-instagram"></i>
                                 </Link>
                             </div>
                             <div className="flex items-center justify-center social-icon">
                                 <Link to='#'>
-                                    <i class="fa-brands fa-dribbble"></i>
+                                    <i className="fa-brands fa-dribbble"></i>
                                 </Link>
                             </div>
                             <div className="flex items-center justify-center social-icon">
                                 <Link to='#'>
-                                    <i class="fa-brands fa-linkedin-in"></i>
+                                    <i className="fa-brands fa-linkedin-in"></i>
                                 </Link>
                             </div>
                         </div>

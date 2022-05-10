@@ -31,11 +31,11 @@ const TopNav = () => {
                 <div className='sm:hidden'>
                     {
                         open ? <button onClick={() => setOpen(false)} className='h-full'>
-                            <i class="fa-solid fa-xmark border border-gray-600 p-2 rounded-md"></i>
+                            <i className="fa-solid fa-xmark border border-gray-600 p-2 rounded-md"></i>
                         </button>
                             :
                             <button onClick={() => setOpen(true)} className='h-full'>
-                                <i class="fa-solid fa-bars border border-gray-600 p-2 rounded-md"></i>
+                                <i className="fa-solid fa-bars border border-gray-600 p-2 rounded-md"></i>
                             </button>
 
                     }
