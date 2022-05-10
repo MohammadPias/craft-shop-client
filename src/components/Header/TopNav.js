@@ -40,7 +40,7 @@ const TopNav = () => {
 
                     }
                 </div>
-                <ul className={` text-center text-md font-bold text-gray-600 p-4 absolute top-full ${open ? 'left-0' : '-left-full sm:left-0'} w-full transition-all duration-1000 sm:flex sm:justify-center border-b border-gray-300 bg-secondary`}>
+                <ul className={` text-center text-md font-bold text-gray-600 p-4 absolute top-full ${open ? 'left-0' : '-left-full sm:left-0'} z-10 w-full transition-all duration-1000 sm:flex sm:justify-center border-b border-gray-300 bg-secondary`}>
                     <li className='mt-3 sm:mt-1 px-5'>Home</li>
                     <li className='mt-3 sm:mt-1 px-5'>Shop</li>
                     <li className='mt-3 sm:mt-1 px-5'>About Us</li>

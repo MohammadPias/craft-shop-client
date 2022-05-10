@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer components {
+  .container {
+    @apply w-4/5 mx-auto
+  }
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

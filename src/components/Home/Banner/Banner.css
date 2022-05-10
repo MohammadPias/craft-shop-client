@@ -1,0 +1,19 @@
+.slick-arrow {
+    background-color: #c5986b;
+}
+
+.slick-prev {
+    left: 30px;
+    background-color: white;
+    z-index: 9;
+}
+
+.slick-next {
+    right: 30px;
+    background-color: white;
+    z-index: 9;
+}
+
+.slick-dots {
+    bottom: 30px;
+}
