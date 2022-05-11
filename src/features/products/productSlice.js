@@ -3,7 +3,8 @@ import { instance } from '../../Api/ProductApi';
 
 const initialState = {
   result: [],
-  status: 'idle',
+  loading: false,
+  error: ''
 };
 export const getProductAsync = createAsyncThunk(
   'products/fetchProducts',
@@ -32,11 +33,15 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getProductAsync.pending, (state) => {
-        state.status = 'loading';
+        state.loading = true;
       })
       .addCase(getProductAsync.fulfilled, (state, action) => {
-        state.status = 'idle';
+        state.loading = false;
         state.result = action.payload;
+      })
+      .addCase(getProductAsync.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
