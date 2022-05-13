@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useFirebase from '../../Hooks/useFirebase';
 import logo from '../../images/logo-ver.svg'
+import { ToastContainer, toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import userImg from '../../images/user.png'
 
 const TopNav = () => {
     const [open, setOpen] = useState(false);
-    console.log(open)
+    const { handleSignOut } = useFirebase();
+    const user = useSelector(state => state?.user?.result)
+    const handleLogOut = () => {
+        handleSignOut();
+        if (user?.email) {
+            toast.success('Sign Out successfully')
+        }
+    }
     return (
         <div className='border border-b-gray-300'>
             <div className="grid grid-cols-2 items-center sm:grid-cols-3 gap-8 sm:w-4/5 mx-auto p-5">
@@ -21,11 +32,29 @@ const TopNav = () => {
                     <div className='relative group'>
                         <i className="fa-solid fa-user mr-7 cursor-pointer"></i>
                         <div className='flex flex-col text-lg font-medium bg-secondary p-4 rounded-md absolute top-full right-1/2 z-20 invisible shadow-md group-hover:visible'>
-                            <Link to='/login' className='hover:text-gray-400 border-b border-gray-300 p-2'>Login</Link>
-                            <Link to='/register' className='hover:text-gray-400 border-b border-gray-300 p-2'>Register</Link>
+                            {
+                                user?.email &&
+                                <div className='flex flex-col text-center items-center justify-between border-b border-gray-300 p-2'>
+                                    {user?.photoURL ?
+                                        <img className='h-14 w-14 rounded-full' src={user?.photoURL} alt="" />
+                                        :
+                                        <img className='h-14 w-14 rounded-full' src={userImg} alt="" />
+                                    }
+                                    <h1>{user?.displayName?.split(' ')[0]}</h1>
+                                </div>
+                            }
+                            {
+                                !user?.email &&
+                                <Link to='/login' className='hover:text-gray-400 border-b border-gray-300 p-2'>Login</Link>
+                            }
+                            {
+                                !user?.email &&
+                                <Link to='/register' className='hover:text-gray-400 border-b border-gray-300 p-2'>Register</Link>
+                            }
                             <Link to='/profile' className='hover:text-gray-400 border-b border-gray-300 p-2'>Profile</Link>
                             <Link to='/dashboard' className='hover:text-gray-400 border-b border-gray-300 p-2'>Dashboard</Link>
-                            <button className="btn btn-primary hover:bg-tertiary transition duration-150">Log out</button>
+                            <button onClick={() => handleLogOut()} className="btn btn-primary hover:bg-tertiary transition duration-150">Log out</button>
+                            <ToastContainer />
                         </div>
                     </div>
                     <div className='relative'>
