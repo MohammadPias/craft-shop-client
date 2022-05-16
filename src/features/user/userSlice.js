@@ -4,12 +4,6 @@ const initialState = {
     result: {},
     loading: false,
     error: '',
-    /* displayName: '',
-    email: '',
-    photoURL: '',
-    loading: false,
-    error: '',
-    admin: '', */
 }
 
 const userSlice = createSlice({
@@ -36,6 +30,7 @@ const userSlice = createSlice({
     }
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logOutUser, makeAdmin } = userSlice.actions
+export const { loginRequest, loginSuccess, loginFailure, logOutUser, makeAdmin } = userSlice.actions;
+export const selectUser = state => state.user.result;
 
 export default userSlice.reducer

@@ -105,15 +105,6 @@ const useFirebase = () => {
     // Handle On Auth State change==========================
     useEffect(() => {
         onAuthStateChanged(auth, user => {
-            if (user?.email) {
-                const getUser = {
-                    displayName: user.displayName,
-                    email: user.email,
-                    photoURL: user.photoURL,
-                    role: '',
-                }
-                dispatch(loginSuccess(getUser))
-            }
 
         });
     }, [])

@@ -8,6 +8,11 @@ module.exports = {
         'secondary-deep': '#f0e3d8',
         'tertiary': '#a37b57',
       },
+      screens: {
+        'sm': '576px',
+        'md': '768px',
+        'lg': '991px',
+      },
     },
   },
   plugins: [],

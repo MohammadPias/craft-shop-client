@@ -11,6 +11,7 @@ import NotFound from './components/NotFound/NotFound';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import Dashboard from './components/Dashboard/Dashboard';
+import ManageUsers from './components/Dashboard/ManageUsers/ManageUsers';
 
 function App() {
   return (
@@ -19,11 +20,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
+        <Route path='login' element={<Login />} />
+        <Route path='register' element={<Register />} />
 
-        <Route path='/dashboard' element={<Dashboard />} >
-
+        <Route path='dashboard' element={<Dashboard />} >
+          <Route path='manageUsers' element={<ManageUsers />} />
         </Route>
       </Routes>
       {/* <Footer /> */}
