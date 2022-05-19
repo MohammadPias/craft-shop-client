@@ -8,8 +8,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
+import Modal from 'react-modal';
 
 const container = document.getElementById('root');
+Modal.setAppElement('#root');
 const root = createRoot(container);
 
 let persistor = persistStore(store)

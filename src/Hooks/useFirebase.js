@@ -9,13 +9,13 @@ import {
     createUserWithEmailAndPassword,
     updateProfile,
     signInWithEmailAndPassword,
+    deleteUser,
 } from "firebase/auth";
 import {
     loginRequest,
     loginSuccess,
     loginFailure,
     logOutUser,
-    makeAdmin,
 
 } from '../features/user/userSlice';
 import { useDispatch } from 'react-redux';
@@ -35,10 +35,12 @@ const useFirebase = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
+                console.log(user)
                 const getUser = {
                     displayName: user.displayName,
                     email: user.email,
-                    photoURL: user.photoURL
+                    photoURL: user.photoURL,
+                    uid: user.uid,
                 }
                 updateUser(getUser, 'PUT')
                 dispatch(loginSuccess(getUser))
@@ -56,7 +58,8 @@ const useFirebase = () => {
                 const getUser = {
                     displayName: name,
                     email: user.email,
-                    photoURL: user.photoURL
+                    photoURL: user.photoURL,
+                    uid: user.uid,
                 }
                 // update profile==========
                 const auth = getAuth();
@@ -90,6 +93,21 @@ const useFirebase = () => {
             .catch((error) => {
                 dispatch(loginFailure(error.message))
             });
+    };
+
+    // update Profile
+
+    const updateUserProfile = () => {
+        updateProfile(auth.currentUser, {
+            displayName: "Jane Q. User",
+            photoURL: "https://example.com/jane-q-user/profile.jpg"
+        }).then(() => {
+            // Profile updated!
+            // ...
+        }).catch((error) => {
+            // An error occurred
+            // ...
+        });
     }
 
 
@@ -99,6 +117,17 @@ const useFirebase = () => {
             dispatch(logOutUser())
         }).catch((error) => {
         })
+    }
+
+    // Delete user
+    const handleUserDelete = () => {
+        const user = auth.currentUser;
+        deleteUser(user).then(() => {
+            // User deleted.
+        }).catch((error) => {
+            // An error ocurred
+            // ...
+        });
     }
 
 
@@ -115,7 +144,7 @@ const useFirebase = () => {
             method: method,
             url: '/users',
             data: newUser
-        })
+        }).then(res => console.log(res))
     };
 
     return {
@@ -123,6 +152,8 @@ const useFirebase = () => {
         handleSignOut,
         handleRegistration,
         handleSignIn,
+        handleUserDelete,
+        updateUserProfile,
     }
 };
 

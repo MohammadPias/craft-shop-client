@@ -4,11 +4,18 @@ import favicon from '../../images/favicon.png'
 import { Link, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../features/user/userSlice';
+import useFirebase from '../../Hooks/useFirebase';
+import userImg from '../../images/user.png'
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false);
     const [active, setActive] = useState('Dashboard');
-    const user = useSelector(selectUser)
+    const user = useSelector(selectUser);
+    const { handleSignOut } = useFirebase();
+
+    const handleLogOut = () => {
+        handleSignOut();
+    }
     return (
         <div className='flex'>
             <div className={`side-bar h-screen ${open ? 'w-64' : 'w-16'} duration-500 bg-secondary relative`}>
@@ -50,10 +57,30 @@ const Dashboard = () => {
                             </button>
                         </div>
                         <div className='text-right text-2xl lg:order-3 flex gap-x-8 justify-center lg:justify-end'>
-                            <div className='flex gap-x-3'>
-                                <h1 className='text-xl font-medium'>{user?.displayName?.split(" ")[0]}</h1>
-                                <div className='h-10 w-10'>
-                                    <img className='rounded-full' src={user?.photoURL} alt="" />
+                            <div className='relative group'>
+                                <div className='flex gap-x-3'>
+                                    <h1 className='text-xl font-medium'>{user?.displayName?.split(" ")[0]}</h1>
+                                    <div className='h-10 w-10'>
+                                        {user?.photoURL ?
+                                            <img className='rounded-full' src={user?.photoURL} alt="" />
+                                            :
+                                            <img className='rounded-full' src={userImg} alt="" />
+                                        }
+                                    </div>
+                                </div>
+                                <div className='flex flex-col text-lg font-medium bg-secondary p-4 rounded-md absolute top-full right-0 z-20 invisible shadow-md group-hover:visible'>
+                                    {
+                                        !user?.email &&
+                                        <Link to='/login' className='hover:text-gray-400 border-b border-gray-300 p-2'>Login</Link>
+                                    }
+                                    {
+                                        !user?.email &&
+                                        <Link to='/register' className='hover:text-gray-400 border-b border-gray-300 p-2'>Register</Link>
+                                    }
+                                    {
+                                        user?.email &&
+                                        <button onClick={() => handleLogOut()} className="btn btn-primary hover:bg-tertiary transition duration-150 w-full">LogOut</button>
+                                    }
                                 </div>
                             </div>
                             <div className='relative'>

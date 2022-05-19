@@ -9,8 +9,8 @@ const initialState = {
 
 export const getUsersAsync = createAsyncThunk(
     'users/fetchUsers',
-    async () => {
-        const response = await instance.get('/users')
+    async ({ currPage, userPerPage, search }) => {
+        const response = await instance.get(`/users?currPage=${currPage}&&userPerPage=${userPerPage}&&search=${search}`)
             .then(res => res.data)
         return response;
     }
@@ -19,6 +19,11 @@ export const getUsersAsync = createAsyncThunk(
 const userSlice = createSlice({
     name: 'users',
     initialState,
+    reducers: {
+        userFilter: (state, action) => {
+            state.result = action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getUsersAsync.pending, (state) => {
@@ -35,6 +40,10 @@ const userSlice = createSlice({
     }
 });
 
-export const { } = userSlice.actions
+export const selectUsers = state => state.users?.result?.users;
+export const count = state => state.users?.result?.count;
+export const adminCount = state => state.users?.result?.adminCount;
+
+export const { userFilter } = userSlice.actions
 
 export default userSlice.reducer

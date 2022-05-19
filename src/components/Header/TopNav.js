@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFirebase from '../../Hooks/useFirebase';
 import logo from '../../images/logo-ver.svg'
-import { ToastContainer, toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import userImg from '../../images/user.png'
+import userImg from '../../images/user.png';
 
 const TopNav = () => {
     const [open, setOpen] = useState(false);
@@ -12,9 +11,6 @@ const TopNav = () => {
     const user = useSelector(state => state?.user?.result)
     const handleLogOut = () => {
         handleSignOut();
-        if (user?.email) {
-            toast.success('Sign Out successfully')
-        }
     }
     return (
         <div className='border border-b-gray-300'>
@@ -53,8 +49,10 @@ const TopNav = () => {
                             }
                             <Link to='/profile' className='hover:text-gray-400 border-b border-gray-300 p-2'>Profile</Link>
                             <Link to='/dashboard' className='hover:text-gray-400 border-b border-gray-300 p-2'>Dashboard</Link>
-                            <button onClick={() => handleLogOut()} className="btn btn-primary hover:bg-tertiary transition duration-150">Log out</button>
-                            <ToastContainer />
+                            {
+                                user?.email &&
+                                <button onClick={() => handleLogOut()} className="btn btn-primary hover:bg-tertiary transition duration-150 w-full">LogOut</button>
+                            }
                         </div>
                     </div>
                     <div className='relative'>
