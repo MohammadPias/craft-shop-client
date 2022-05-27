@@ -5,14 +5,15 @@ import { adminCount, count, getUsersAsync, } from '../../../features/users/Users
 import Card from '../../Card/Card';
 import LoaderComponent from '../../common/Loder/Loder';
 import ModalShow from '../../common/Modal/Modal';
+import Pagination from '../../common/Pagination/Pagination';
 import Table from '../../Table/Table';
+import DashboardHeader from '../DashboardHeader';
 
 const ManageUsers = () => {
-    const [modalIsOpen, setModalIsOpen] = useState(false);
     const [userType, setUserType] = useState('');
-    const [refresh, setRefresh] = useState(false);
     const [totalPage, setTotalPage] = useState(0);
     const [currPage, setCurrPage] = useState(0);
+    const [adminCurrPage, setAdminCurrPage] = useState(0);
 
     const dispatch = useDispatch();
     const totalUsers = useSelector(count);
@@ -21,23 +22,22 @@ const ManageUsers = () => {
     const { loading, result } = useSelector((state) => ({ ...state.users }));
 
     const userPerPage = 3;
-    console.log(result?.users)
+    console.log('Current Page', currPage)
+    // console.log(totalUsers, totalAdmins)
 
     useEffect(() => {
-        const search = 'users';
-        dispatch(getUsersAsync({ currPage, userPerPage, search }));
-        setTotalPage(Math.ceil(totalUsers / userPerPage))
-
         if (userType === 'admins') {
-            const search = 'admin';
             setTotalPage(Math.ceil(totalAdmins / userPerPage));
-            dispatch(getUsersAsync({ currPage, userPerPage, search }));
+
+            dispatch(getUsersAsync({ adminCurrPage, userPerPage, userType }));
         }
         else {
-            console.log('all users')
+            dispatch(getUsersAsync({ currPage, userPerPage, userType }));
+            setTotalPage(Math.ceil(totalUsers / userPerPage))
         }
 
     }, [currPage,
+        adminCurrPage,
         dispatch,
         totalPage,
         userType,
@@ -51,46 +51,32 @@ const ManageUsers = () => {
                     :
                     <div className=''>
                         <ToastContainer />
-                        <ModalShow
-                            modalIsOpen={modalIsOpen}
-                            setModalIsOpen={setModalIsOpen}
+                        <ModalShow title={'ManageUsers'} />
+                        <DashboardHeader
+                            title='User Management'
+                            setFilerType={setUserType}
+                            filterType={userType}
+                            filterTitle='users'
+                            value={[
+                                { value: 'allUsers', label: 'All Users' },
+                                { value: 'admins', label: 'Admins' },
+                            ]}
                         />
-                        <div className="bg-gray-100 py-5 px-8 flex justify-between gap-5 items-center flex-col lg:flex-row rounded-md lg:rounded-none shadow">
-                            <div className='flex space-x-3 items-center'>
-                                <p className='text-md font-bold text-gray-600'>User Management</p>
-                                <select
-                                    onChange={(e) => {
-                                        e.preventDefault()
-                                        setUserType(e.target.value)
-                                    }}
-                                    className='px-5 py-1 rounded-md focus:outline-gray-300' name="users" id="">
-                                    <option value="" hidden>Filter Users</option>
-                                    <option value="allUsers">All User</option>
-                                    <option value="admins">Admins</option>
-                                </select>
-                            </div>
-                            <div onClick={() => setModalIsOpen(true)} className='flex space-x-3 items-center text-gray-600 cursor-pointer'>
-                                <i className="fa-solid fa-circle-plus text-2xl"></i>
-                                <p className='text-md font-bold text-gray-600'>Add Admin</p>
-                            </div>
-                        </div>
+
                         <div className=' mt-5 hidden lg:block'>
-                            <Table data={result?.users} setRefresh={setRefresh} />
+                            <Table data={result?.users} />
                         </div>
                         <div className='lg:hidden grid grid-cols-1 md:grid-cols-2 mt-5 rounded-md gap-4'>
                             {
                                 result?.users?.map((user, index) => <Card key={index} data={user} />)
                             }
                         </div>
-                        <div className='flex justify-center p-10'>
-                            {
-                                [...Array(totalPage)?.keys()]?.map(page => <button
-                                    key={page}
-                                    onClick={() => setCurrPage(page)}
-                                    className={`h-10 w-10 rounded-full mr-3 bg-secondary-deep  ${page === currPage && 'bg-primary text-white'} font-bold text-gray-600`}
-                                >{page + 1}</button>)
-                            }
-                        </div>
+                        <Pagination
+                            currPage={currPage}
+                            totalPage={totalPage}
+                            setCurrPage={setCurrPage}
+                            setAdminCurrPage={setAdminCurrPage}
+                        />
                     </div>
             }
         </>
