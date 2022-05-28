@@ -18,7 +18,7 @@ const Dashboard = () => {
     }
     return (
         <div className='flex'>
-            <div className={`side-bar h-screen ${open ? 'w-64' : 'w-16'} duration-500 bg-secondary relative`}>
+            <div className={`side-bar h-screen ${open ? 'w-64 absolute z-50' : 'w-16 relative'} duration-500 bg-secondary `}>
                 <i onClick={() => setOpen(!open)} className={`fa-solid fa-circle-arrow-left text-gray-500 text-2xl absolute top-12 -right-3 cursor-pointer ${!open && 'rotate-180'}`}></i>
 
                 <div className='flex items-center p-3 h-12 mt-3'>

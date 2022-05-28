@@ -6,7 +6,7 @@ import { modalOpen } from '../../features/mySlice/mySlice';
 const DashboardHeader = ({ title, setFilerType, filterType, value, filterTitle }) => {
     const dispatch = useDispatch();
     return (
-        <div className="bg-gray-100 py-5 px-8 flex justify-between gap-5 items-center flex-col lg:flex-row rounded-md lg:rounded-none shadow">
+        <div className="bg-gray-100 py-5 px-8 flex justify-between gap-5 items-center flex-col lg:flex-row lg:rounded-none shadow">
 
             {/* user management============ */}
             <div className='flex space-x-3 items-center'>
@@ -20,14 +20,20 @@ const DashboardHeader = ({ title, setFilerType, filterType, value, filterTitle }
                 />
             </div>
             {
-                title === 'User Management' || 'Product Management' &&
-
+                title === 'User Management' &&
                 <div onClick={() => dispatch(modalOpen())} className='flex space-x-3 items-center text-gray-600 cursor-pointer'>
                     <i className="fa-solid fa-circle-plus text-2xl"></i>
                     <p className='text-md font-bold text-gray-600'>
-                        {
-                            title === 'User Management' ? 'Add Admin' : 'Add Product'
-                        }
+                        Add Admin
+                    </p>
+                </div>
+            }
+            {
+                title === 'Products Management' &&
+                <div onClick={() => dispatch(modalOpen())} className='flex space-x-3 items-center text-gray-600 cursor-pointer'>
+                    <i className="fa-solid fa-circle-plus text-2xl"></i>
+                    <p className='text-md font-bold text-gray-600'>
+                        Add Product
                     </p>
                 </div>
             }

@@ -8,9 +8,9 @@ const initialState = {
 };
 export const getProductAsync = createAsyncThunk(
   'products/fetchProducts',
-  async () => {
-    const response = await instance.get('products')
-      .then(res => res.data.result)
+  async ({ currPage, userPerPage, filterType }) => {
+    const response = await instance.get(`/products?currPage=${currPage}&&userPerPage=${userPerPage}&&filterType=${filterType}`)
+      .then(res => res.data)
     return response;
   }
 );
