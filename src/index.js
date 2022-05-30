@@ -9,12 +9,15 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 import Modal from 'react-modal';
+import { countCart } from './features/cartSlice/cartSlice';
 
 const container = document.getElementById('root');
 Modal.setAppElement('#root');
 const root = createRoot(container);
 
 let persistor = persistStore(store)
+
+store.dispatch(countCart())
 
 root.render(
   <React.StrictMode>

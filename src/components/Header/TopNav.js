@@ -8,10 +8,12 @@ import userImg from '../../images/user.png';
 const TopNav = () => {
     const [open, setOpen] = useState(false);
     const { handleSignOut } = useFirebase();
+    const productQuantity = useSelector(state => state.cart.totalProduct)
     const user = useSelector(state => state?.user?.result)
     const handleLogOut = () => {
         handleSignOut();
     }
+
     return (
         <div className='border border-b-gray-300'>
             <div className="grid grid-cols-2 items-center sm:grid-cols-3 gap-8 sm:w-4/5 mx-auto p-5">
@@ -59,8 +61,8 @@ const TopNav = () => {
                         <Link to='/cart'>
                             <i className="fa-solid fa-bag-shopping cursor-pointer"></i>
                         </Link>
-                        <div className="w-6 h-6 bg-primary rounded-full text-xs font-bold p-1 text-white absolute -top-2 -right-4">
-                            10
+                        <div className="w-6 h-6 bg-primary rounded-full text-xs font-bold p-1 text-white absolute -top-2 -right-4 flex justify-center items-center">
+                            {productQuantity}
                         </div>
                     </div>
                 </div>

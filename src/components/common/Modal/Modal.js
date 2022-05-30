@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal'
 import { useDispatch, useSelector } from 'react-redux';
 import { modalClose } from '../../../features/mySlice/mySlice';
+import ProductDetails from '../../Home/ProductDetails/ProductDetails';
 import ProductModal from './ProductModal';
 import UsersModal from './UsersModal';
 
@@ -19,7 +20,7 @@ const ModalShow = ({ title }) => {
     const { modalIsOpen, Value } = useSelector(state => ({ ...state.myActions }))
     console.log(modalIsOpen, Value)
     const dispatch = useDispatch()
-    console.log(title)
+    // console.log(title)
     return (
         <Modal
             isOpen={modalIsOpen}
@@ -28,14 +29,25 @@ const ModalShow = ({ title }) => {
             style={customStyles}
             contentLabel="Example Modal"
         >
-            {
-                title === 'ManageUsers' &&
-                <UsersModal value={Value} />
-            }
-            {
-                title === 'ManageProducts' &&
-                <ProductModal />
-            }
+            <div>
+                <div className='flex justify-end'>
+                    <button
+                        onClick={() => dispatch(modalClose())}
+                        className='h-8 w-8 rounded-full bg-primary text-white'>
+                        <i className="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                {
+                    title === 'ManageUsers' &&
+                    <UsersModal value={Value} />
+                }
+                {
+                    title === 'ManageProducts' &&
+                    <ProductModal />
+                }
+
+            </div>
         </Modal>
     );
 };

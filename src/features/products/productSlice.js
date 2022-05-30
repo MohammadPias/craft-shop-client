@@ -49,11 +49,4 @@ export const productSlice = createSlice({
 export const { increment, decrement, incrementByAmount } = productSlice.actions;
 export const selectProduct = (state) => state.products.result;
 
-/* export const incrementIfOdd = (amount) => (dispatch, getState) => {
-  const currentValue = selectCount(getState());
-  if (currentValue % 2 === 1) {
-    dispatch(incrementByAmount(amount));
-  }
-}; */
-
 export default productSlice.reducer;

@@ -73,6 +73,7 @@ const useFirebase = () => {
                 updateUser(getUser, "POST");
                 dispatch(loginSuccess(getUser))
                 navigate(destination);
+                console.log(navigate(destination))
                 toast.success('Registration Successful')
             })
             .catch((error) => {

@@ -12,9 +12,16 @@ const Dashboard = () => {
     const [active, setActive] = useState('Dashboard');
     const user = useSelector(selectUser);
     const { handleSignOut } = useFirebase();
+    const cart = useSelector(state => state.cart.result)
 
     const handleLogOut = () => {
         handleSignOut();
+    }
+    let productQuantity = 0;
+    if (cart.length > 0) {
+        for (const product of cart) {
+            productQuantity = productQuantity + product.qty;
+        }
     }
     return (
         <div className='flex'>
@@ -87,8 +94,8 @@ const Dashboard = () => {
                                 <Link to='/cart'>
                                     <i className="fa-solid fa-bag-shopping cursor-pointer"></i>
                                 </Link>
-                                <div className="w-6 h-6 bg-primary rounded-full text-xs font-bold p-1 text-white absolute -top-2 -right-4">
-                                    10
+                                <div className="w-6 h-6 bg-primary rounded-full text-xs font-bold p-1 text-white absolute -top-2 -right-4 flex justify-center items-center">
+                                    {productQuantity}
                                 </div>
                             </div>
                         </div>

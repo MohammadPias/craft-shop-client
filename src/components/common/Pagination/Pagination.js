@@ -4,6 +4,7 @@ const Pagination = ({ totalPage, setCurrPage, setAdminCurrPage, currPage }) => {
     return (
         <div className='flex justify-center p-10'>
             {
+                totalPage > 0 &&
                 [...Array(totalPage)?.keys()]?.map(page => <button
                     key={page}
                     onClick={() => {
