@@ -5,6 +5,8 @@ const initialState = {
     result: [],
     totalPrice: 0,
     totalProduct: 0,
+    cartEstimate: {},
+    payment: {},
 }
 
 const cartSlice = createSlice({
@@ -61,11 +63,30 @@ const cartSlice = createSlice({
         },
         clearCart: (state) => {
             state.result = [];
+            state.payment = {};
+            state.cartEstimate = {};
+            state.totalPrice = 0;
+            state.totalProduct = 0;
             toast.warn('Cart has been removed successfully.')
+        },
+        setCartAccount: (state, { payload }) => {
+            state.cartEstimate = payload;
+        },
+        setPayment: (state, { payload }) => {
+            state.payment = payload
         }
     }
 });
 
-export const { addToCart, countCart, removeFromCart, increaseCount, decreaseCount, clearCart } = cartSlice.actions
+export const {
+    addToCart,
+    countCart,
+    removeFromCart,
+    increaseCount,
+    decreaseCount,
+    clearCart,
+    setCartAccount,
+    setPayment,
+} = cartSlice.actions
 
 export default cartSlice.reducer

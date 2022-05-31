@@ -19,15 +19,6 @@ export const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
   },
 
   extraReducers: (builder) => {
@@ -46,7 +37,7 @@ export const productSlice = createSlice({
   },
 });
 
-export const { increment, decrement, incrementByAmount } = productSlice.actions;
+export const { } = productSlice.actions;
 export const selectProduct = (state) => state.products.result;
 
 export default productSlice.reducer;

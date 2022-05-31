@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { setCartAccount } from '../../features/cartSlice/cartSlice';
 
 const CartRow = ({ title, value }) => {
 
@@ -14,11 +15,14 @@ const CartRow = ({ title, value }) => {
 }
 
 const CartAccount = ({ disable }) => {
-
     const [discount, setDiscount] = useState('');
     const { totalPrice, totalProduct } = useSelector(state => ({ ...state.cart }))
     const [couponValidity, setCouponValidity] = useState(false);
     const [amount, setAmount] = useState(0);
+    // const [estimate, setEstimate] = useState({})
+
+    const dispatch = useDispatch()
+
     const shipping = totalPrice > 500 ? 50 : 0;
     const tax = (totalPrice + shipping) * 10 / 100;
     let netAmount = totalPrice + shipping + tax;
@@ -29,7 +33,8 @@ const CartAccount = ({ disable }) => {
         const tax = (totalPrice + shipping) * 10 / 100;
         let netAmount = totalPrice + shipping + tax;
         setAmount(netAmount)
-    }, [totalPrice])
+        // setEstimate(cartEstimate)
+    }, [totalPrice, amount, totalProduct])
 
     const makeDiscount = (amount) => {
         const coupon = process.env.REACT_APP_COUPON;
@@ -43,6 +48,15 @@ const CartAccount = ({ disable }) => {
     const handleOnSubmit = (e) => {
         e.preventDefault()
         makeDiscount(e.target.coupon.value)
+    }
+
+    const cartEstimate = {
+        price: totalPrice,
+        items: totalProduct,
+        shipping: shipping,
+        tax: tax,
+        total: amount
+
     }
     return (
         <div className='w-full border border-gray-200 p-5'>
@@ -72,7 +86,9 @@ const CartAccount = ({ disable }) => {
                         <button disabled={couponValidity && true} type='submit' className={`h-8 btn btn-primary ${couponValidity && 'opacity-50'}`}>Apply</button>
                     </form>
                     <Link to='checkout'>
-                        <button className='h-12 btn btn-primary w-full'>Proceed to Checkout</button>
+                        <button
+                            onClick={() => dispatch(setCartAccount(cartEstimate))}
+                            className='h-12 btn btn-primary w-full'>Proceed to Checkout</button>
                     </Link>
                 </div>
             }

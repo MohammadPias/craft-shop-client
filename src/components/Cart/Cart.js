@@ -17,7 +17,6 @@ const Cart = () => {
         dispatch(countCart())
     }, [cart, dispatch])
     const heading = ['Products', 'Price', 'Quantity', 'view', 'Delete']
-    const tableData = []
     return (
         <div>
             <Header />
