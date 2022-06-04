@@ -14,6 +14,8 @@ const Dashboard = () => {
     const { handleSignOut } = useFirebase();
     const cart = useSelector(state => state.cart.result)
 
+    console.log(user)
+
     const handleLogOut = () => {
         handleSignOut();
     }
@@ -35,7 +37,7 @@ const Dashboard = () => {
                 <ul className='mt-5'>
                     {
                         menus.map((menu, index) => {
-                            return <Link to={menu.path} key={index}>
+                            return <Link to={menu.path === 'shop' ? '/shop' : menu.path} key={index}>
                                 <li
                                     className={`p-3 text-gray-500 z-10 flex items-center gap-3 h-12 hover:bg-secondary-deep cursor-pointer focus:border border-gray-500 ${active === menu.name && 'bg-secondary-deep border-l-4 border-tertiary shadow-sm'}`}
                                     onClick={() => setActive(menu.name)}

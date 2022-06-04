@@ -22,7 +22,7 @@ const ManageUsers = () => {
     const { loading, result } = useSelector((state) => ({ ...state.users }));
 
     const userPerPage = 3;
-    console.log('Current Page', currPage)
+    // console.log('Current Page', currPage)
     // console.log(totalUsers, totalAdmins)
 
     useEffect(() => {

@@ -2,38 +2,82 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { instance } from '../../Api/ProductApi';
 
 const initialState = {
-    data: [],
+    myOrders: {},
+    allOrders: {},
     loading: false,
     error: '',
 };
 export const fetchOrders = createAsyncThunk(
     'orders/fetchOrders',
-    async () => {
-        instance.get('/orders')
-            .then(res => console.log(res))
+    async ({ currPage, orderPerPage, email, filterType }) => {
+        return instance.get(`/myOrders?currPage=${currPage}&&orderPerPage=${orderPerPage}&&email=${email}&&filterType=${filterType}`)
+            .then(res => res.data)
+    }
+)
+export const fetchAllOrders = createAsyncThunk(
+    'orders/fetchAllOrders',
+    async ({ currPage, orderPerPage, filterType }) => {
+        console.log(currPage, orderPerPage)
+        return instance.get(`/orders?currPage=${currPage}&&orderPerPage=${orderPerPage}&&filterType=${filterType}`)
+            .then(res => res.data)
     }
 )
 
 const orderSlice = createSlice({
     name: 'second',
     initialState,
-    reducers: {},
+    reducers: {
+        updateOrders: (state, { payload }) => {
+            const tempOrders = state.myOrders?.data?.filter(item => item._id !== payload)
+            state.myOrders.data = tempOrders;
+            // console.log('temOrders', tempOrders, payload)
+        },
+        updateAllOrders: (state, { payload }) => {
+            if (payload?.action === 'delete') {
+                const tempOrders = state.allOrders?.data?.filter(item => item?._id !== payload.orderId)
+                state.allOrders.data = tempOrders;
+                // console.log('hit from delete', state.allOrders.data)
+            }
+            else {
+                const orderIndex = state.allOrders?.data?.findIndex(item => item?._id === payload.orderId)
+                if (orderIndex >= 0) {
+                    state.allOrders.data[orderIndex].status = payload.action
+                }
+                else {
+
+                }
+            }
+            // console.log(payload)
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchOrders.pending, (state) => {
                 state.loading = true
             })
             .addCase(fetchOrders.fulfilled, (state, { payload }) => {
-                state.data = payload;
+                state.myOrders = payload;
                 state.loading = false;
             })
             .addCase(fetchOrders.rejected, (state, { error }) => {
                 state.loading = false;
                 state.error = error.message;
             })
-    }
+        builder
+            .addCase(fetchAllOrders.pending, (state) => {
+                state.loading = true
+            })
+            .addCase(fetchAllOrders.fulfilled, (state, { payload }) => {
+                state.allOrders = payload;
+                state.loading = false;
+            })
+            .addCase(fetchAllOrders.rejected, (state, { error }) => {
+                state.loading = false;
+                state.error = error.message;
+            })
+    },
 });
 
-export const { } = orderSlice.actions
+export const { updateOrders, updateAllOrders } = orderSlice.actions
 
 export default orderSlice.reducer

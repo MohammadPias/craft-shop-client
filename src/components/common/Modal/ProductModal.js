@@ -20,13 +20,12 @@ const ProductModal = () => {
         }
     });
     const onSubmit = data => {
-        const currDate = new Date();
-        const date = currDate.toLocaleDateString()
+        // const currDate = new Date();
+        // const date = currDate.toLocaleDateString()
         const newData = {
 
             ...data,
             rating: [data?.rating?.label],
-            date: date,
             category: data.category.label,
             color: data.color.label,
 
@@ -67,7 +66,7 @@ const ProductModal = () => {
                     name={value}
                     control={control}
                     render={({ field }) => <input
-                        className='w-full border border-gray-200 py-1.5 my-3 rounded-md focus:outline-2 focus:outline-blue-400 text-gray-500'
+                        className='w-full border border-gray-300 py-1.5 my-3 rounded-md focus:outline-2 focus:outline-blue-400 text-gray-500'
                         {...field} />}
                 />
             </div>
@@ -75,15 +74,15 @@ const ProductModal = () => {
     }
     return (
         <div>
-            <h1 className="font-medium my-4 text-center text-3xl">Add Product</h1>
+            <h1 className="font-bold text-gray-600 my-4 text-center text-xl">Add Product</h1>
             <div>
                 <ToastContainer />
                 <form
-                    className='w-full'
+                    className='w-full bg-gray-50 p-5 shadow-md'
                     onSubmit={handleSubmit(onSubmit)}
                 >
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                        <div className='shadow-sm p-5 border border-gray-100'>
+                        <div className='shadow-sm p-5 border border-gray-200 bg-white'>
                             <SelectInput
                                 title="category"
                                 data={[
@@ -118,12 +117,12 @@ const ProductModal = () => {
                                 ]}
                             />
                         </div>
-                        <div className='shadow-sm p-5 border border-gray-100'>
+                        <div className='shadow-sm p-5 border border-gray-200 bg-white'>
                             <InputText title="Product title" value='title' />
                             <InputText title="Price" value='price' />
                             <InputText title="Brand" value='brand' />
                         </div>
-                        <div className='shadow-sm p-5 border border-gray-100'>
+                        <div className='shadow-sm p-5 border border-gray-200 bg-white'>
                             <InputText title="Material" value='material' />
                             <InputText title="In-stock" value='stock' />
                             <label className='text-sm font-medium '>Description</label>
@@ -131,7 +130,7 @@ const ProductModal = () => {
                                 name='info'
                                 control={control}
                                 render={({ field }) => <textarea
-                                    className='w-full border border-gray-200 py-2 my-2 focus:outline-none text-gray-500'
+                                    className='w-full border border-gray-300 py-2 my-2 focus:outline-none text-gray-500'
                                     {...field} />}
                             />
                         </div>
@@ -142,7 +141,7 @@ const ProductModal = () => {
                         name='img'
                         control={control}
                         render={({ field }) => <input
-                            className='w-full border border-gray-200 py-2 my-2 focus:outline-none text-gray-500 shadow-sm'
+                            className='w-full border border-gray-300 py-2 my-2 focus:outline-none text-gray-500 shadow-sm'
                             {...field} />}
                     />
                     <div className="flex justify-center">

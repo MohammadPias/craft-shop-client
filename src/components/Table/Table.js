@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { instance } from '../../Api/ProductApi';
 import { modalOpen } from '../../features/mySlice/mySlice';
+import { deleteSingleUser } from '../../features/users/UsersSlice';
 import LoaderComponent from '../common/Loder/Loder';
 
 const Table = () => {
     const dispatch = useDispatch();
     const { loading, result } = useSelector((state) => ({ ...state.users }));
+
 
     const handleActionOnChange = (e, user) => {
         e.preventDefault();
@@ -21,8 +23,8 @@ const Table = () => {
             if (confirm) {
                 instance.delete(`/users?id=${_id}&&uid=${uid}`)
                     .then(res => {
-                        console.log(res)
-                        toast.success('User Deleted Successfully');
+                        dispatch(deleteSingleUser({ email: email }))
+                        toast.warn('User Deleted Successfully');
                     })
             }
         }

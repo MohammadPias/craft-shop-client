@@ -3,7 +3,8 @@ import { useForm, Controller } from "react-hook-form";
 import { useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import { instance } from '../../../Api/ProductApi';
-import { loginSuccess, setRole } from '../../../features/user/userSlice';
+import { setRole } from '../../../features/user/userSlice';
+import { updateUsers } from '../../../features/users/UsersSlice';
 
 const UsersModal = ({ value }) => {
     const dispatch = useDispatch();
@@ -18,20 +19,16 @@ const UsersModal = ({ value }) => {
         const email = data.email;
         const role = data.role;
         const displayName = data.displayName;
-        const user = {
-            displayName: displayName,
-            email: email,
-            role: role,
-        }
         if (email && role) {
             instance.put('/users', { email, role, displayName })
                 .then(res => {
                     toast.success('User role is added successfully')
+                    dispatch(updateUsers({ email: email, role: role }))
                     reset();
-                    dispatch(setRole(role));
-                    dispatch(loginSuccess(user))
+                    // dispatch(setRole(role));
                 })
                 .catch((error) => {
+                    console.log(error)
                     toast.error('Something went wrong')
                 })
         }

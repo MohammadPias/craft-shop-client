@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import "slick-carousel/slick/slick.css";
@@ -19,10 +19,13 @@ import { ToastContainer } from 'react-toastify';
 import Form from './components/common/Form/Form';
 import { useSelector } from 'react-redux';
 import RequireAuth from './components/RequireAuth/RequireAuth';
+import MyOrders from './components/Dashboard/MyOrders.js/MyOrders';
+import ManageOrders from './components/Dashboard/ManageOrders/ManageOrders';
+import AdminRoute from './components/AdminRoute/AdminRoute';
+import DashboardHome from './components/Dashboard/DashboardHome/DashboardHome';
+import UnAuthorized from './components/UnAuthorized/UnAuthorized';
 
 function App() {
-  const user = useSelector(state => state.user.result)
-  const location = useLocation()
   return (
     <div>
       <ToastContainer />
@@ -30,17 +33,21 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="unauthorized" element={<UnAuthorized />} />
         <Route path='login' element={<Login />} />
         <Route path='register' element={<Register />} />
         <Route path='cart' element={<Cart />} />
         <Route path='cart/checkout' element={<RequireAuth><Form /></RequireAuth>} />
         <Route path='productDetails/:productId' element={<ProductDetails />} />
+        <Route path='shop' element={<Shop />} />
 
-        <Route path='dashboard' element={<Dashboard />} >
-          <Route path='manageUsers' element={<ManageUsers />} />
-          <Route path='shop' element={<Shop />} />
-          <Route path='manageProducts' element={<ManageProducts />} >
-            <Route path='addProduct' element={<ProductModal />} />
+        <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} >
+          <Route index element={<DashboardHome />} />
+          <Route path='manageUsers' element={<AdminRoute><ManageUsers /></AdminRoute>} />
+          <Route path='myOrders' element={<MyOrders />} />
+          <Route path='manageOrders' element={<AdminRoute><ManageOrders /></AdminRoute>} />
+          <Route path='manageProducts' element={<AdminRoute><ManageProducts /></AdminRoute>} >
+            <Route path='addProduct' element={<AdminRoute><ProductModal /></AdminRoute>} />
           </Route>
         </Route>
       </Routes>

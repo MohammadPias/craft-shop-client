@@ -111,10 +111,11 @@ const CheckOutForm = () => {
             setErrorMessage(null);
             setProcessing(false);
             setSuccess('Your payment processed successfully');
+            const date = new Date().toLocaleString;
             const payment = {
                 amount: paymentIntent.amount,
                 id: paymentIntent.id,
-                last4: paymentMethod?.card?.last4,
+                date: date,
             }
             dispatch(setPayment(payment))
         }

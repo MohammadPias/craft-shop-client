@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import initializeAuthentication from '../components/Login/firebase/firebase.init';
 import {
     getAuth,
@@ -16,6 +16,7 @@ import {
     loginSuccess,
     loginFailure,
     logOutUser,
+    setRole,
 
 } from '../features/user/userSlice';
 import { useDispatch } from 'react-redux';
@@ -25,6 +26,8 @@ import { toast } from 'react-toastify';
 initializeAuthentication();
 
 const useFirebase = () => {
+    const [admin, setAdmin] = useState(false);
+    const [user, setUser] = useState({});
     const auth = getAuth();
     const googleProvider = new GoogleAuthProvider();
     const dispatch = useDispatch();
@@ -35,7 +38,7 @@ const useFirebase = () => {
         signInWithPopup(auth, googleProvider)
             .then((result) => {
                 const user = result.user;
-                console.log(user)
+                setUser(user)
                 const getUser = {
                     displayName: user.displayName,
                     email: user.email,
@@ -55,6 +58,7 @@ const useFirebase = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
+                setUser(user)
                 const getUser = {
                     displayName: name,
                     email: user.email,
@@ -88,6 +92,7 @@ const useFirebase = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
+                setUser(user)
                 dispatch(loginSuccess(user))
                 navigate(destination)
             })
@@ -96,18 +101,15 @@ const useFirebase = () => {
             });
     };
 
-    // update Profile
-
-    const updateUserProfile = () => {
+    // update firebase profile
+    const updateFirebaseProfile = (role) => {
+        console.log(role)
         updateProfile(auth.currentUser, {
-            displayName: "Jane Q. User",
-            photoURL: "https://example.com/jane-q-user/profile.jpg"
+            role: role,
         }).then(() => {
-            // Profile updated!
-            // ...
+
         }).catch((error) => {
-            // An error occurred
-            // ...
+
         });
     }
 
@@ -135,7 +137,7 @@ const useFirebase = () => {
     // Handle On Auth State change==========================
     useEffect(() => {
         onAuthStateChanged(auth, user => {
-
+            setUser(user)
         });
     }, [])
 
@@ -148,13 +150,30 @@ const useFirebase = () => {
         }).then(res => console.log(res))
     };
 
+    // check admin
+    useEffect(() => {
+        if (user?.email) {
+            instance.get(`/checkAmin/${user.email}`)
+                .then(res => {
+                    console.log(res.data)
+                    setAdmin(res.data?.admin)
+                    if (res?.data?.admin) {
+                        dispatch(setRole('admin'))
+                    }
+                    else {
+                        dispatch(setRole('user'))
+                    }
+                })
+        }
+    }, [user?.email, dispatch])
+
     return {
         handleGoogleSignIn,
         handleSignOut,
         handleRegistration,
         handleSignIn,
         handleUserDelete,
-        updateUserProfile,
+        updateFirebaseProfile
     }
 };
 

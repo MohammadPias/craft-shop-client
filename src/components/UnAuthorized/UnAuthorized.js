@@ -2,20 +2,20 @@ import React from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 
-const NotFound = () => {
+const UnAuthorized = () => {
     return (
         <div>
             <Header />
             <div className='h-screen flex flex-col justify-center items-center'>
                 <h1 className="text-9xl 
             text-red-600 
-            font-bold ">404</h1>
+            font-bold ">401</h1>
                 <br />
                 <h2 className="text-3xl 
             text-red-600 
             font-bold  
             ">
-                    Page Not Found
+                    Unauthorized User
                 </h2>
             </div>
             <Footer />
@@ -23,4 +23,4 @@ const NotFound = () => {
     );
 };
 
-export default NotFound;
+export default UnAuthorized;

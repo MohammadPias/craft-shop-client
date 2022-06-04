@@ -18,7 +18,7 @@ const customStyles = {
 };
 const ModalShow = ({ title }) => {
     const { modalIsOpen, Value } = useSelector(state => ({ ...state.myActions }))
-    console.log(modalIsOpen, Value)
+    // console.log(modalIsOpen, Value)
     const dispatch = useDispatch()
     // console.log(title)
     return (

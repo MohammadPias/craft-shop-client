@@ -2,7 +2,7 @@
 
 export const menus = [
     { name: 'Home', icon: <i className="fa-solid fa-house"></i>, path: '/' },
-    { name: 'Dashboard', icon: <i className="fa-solid fa-table-columns"></i>, path: 'dashboard' },
+    { name: 'Dashboard', icon: <i className="fa-solid fa-table-columns"></i>, path: 'dashboardHome' },
     { name: 'Shop', icon: <i className="fa-solid fa-shop"></i>, path: 'shop' },
     { name: 'My Orders', icon: <i className="fa-solid fa-cart-arrow-down"></i>, path: 'myOrders' },
     { name: 'Manage Orders', icon: <i className="fa-solid fa-border-all"></i>, path: 'manageOrders' },

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProductAsync } from '../../../features/products/productSlice';
@@ -8,8 +8,12 @@ import ProductCard from '../../common/ProductCard/ProductCard';
 const HomeProducts = () => {
     const dispatch = useDispatch();
     const { loading, result } = useSelector(state => ({ ...state.products }))
+    const [currPage, setCurrPage] = useState();
+    const [filterType, setFilterType] = useState();
+    const [productPerPage, setProductPerPage] = useState();
+
     useEffect(() => {
-        dispatch(getProductAsync());
+        dispatch(getProductAsync({ currPage, productPerPage, filterType }));
         console.log('from home products')
     }, [dispatch])
     // console.log(products)
@@ -31,7 +35,7 @@ const HomeProducts = () => {
                     </div>
             }
             <div className='sm:container flex justify-end px-5'>
-                <Link to='/dashboard/shop'>
+                <Link to='shop'>
                     <button className="btn btn-primary h-10">See More</button>
                 </Link>
             </div>

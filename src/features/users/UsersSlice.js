@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { instance } from '../../Api/ProductApi';
 
 const initialState = {
-    result: [],
+    result: {},
     loading: false,
     error: ''
 };
@@ -22,6 +22,14 @@ const userSlice = createSlice({
     reducers: {
         userFilter: (state, action) => {
             state.result = action.payload
+        },
+        updateUsers: (state, { payload }) => {
+            const userIndex = state.result?.users?.findIndex(item => item?.email === payload?.email);
+            state.result.users[userIndex].role = payload.role
+        },
+        deleteSingleUser: (state, { payload }) => {
+            const tempUsers = state?.result?.users?.filter(item => item.email !== payload.email)
+            state.result.users = tempUsers
         }
     },
     extraReducers: (builder) => {
@@ -44,6 +52,6 @@ export const selectUsers = state => state.users?.result?.users;
 export const count = state => state.users?.result?.count;
 export const adminCount = state => state.users?.result?.adminCount;
 
-export const { userFilter } = userSlice.actions
+export const { userFilter, updateUsers, deleteSingleUser } = userSlice.actions
 
 export default userSlice.reducer

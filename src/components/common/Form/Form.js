@@ -88,6 +88,7 @@ const Form = () => {
                                         <button
                                             onClick={() => {
                                                 if (page === pageTitle.length - 1) {
+
                                                     const order = { ...cart, shipping: formData }
                                                     instance.post('/orders', order)
                                                     toast.success('Your order has been placed successfully.')
