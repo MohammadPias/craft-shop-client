@@ -23,7 +23,10 @@ import MyOrders from './components/Dashboard/MyOrders.js/MyOrders';
 import ManageOrders from './components/Dashboard/ManageOrders/ManageOrders';
 import AdminRoute from './components/AdminRoute/AdminRoute';
 import DashboardHome from './components/Dashboard/DashboardHome/DashboardHome';
-import UnAuthorized from './components/UnAuthorized/UnAuthorized';
+import UnAuthorized from './components/UnAutorized/UnAuthorized';
+import CheckOutForm from './components/common/Payment/CheckOutForm';
+import Pay from './components/Dashboard/Pay/Pay';
+import Feedback from './components/FeedBack/Feedback';
 
 function App() {
   return (
@@ -40,9 +43,12 @@ function App() {
         <Route path='cart/checkout' element={<RequireAuth><Form /></RequireAuth>} />
         <Route path='productDetails/:productId' element={<ProductDetails />} />
         <Route path='shop' element={<Shop />} />
+        <Route path='pay/:orderId' element={<Pay />} />
+        <Route path='feedback/:orderId' element={<Feedback />} />
 
         <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} >
           <Route index element={<DashboardHome />} />
+          {/* <Route path='dashboardHome' element={<AdminRoute><DashboardHome /></AdminRoute>} /> */}
           <Route path='manageUsers' element={<AdminRoute><ManageUsers /></AdminRoute>} />
           <Route path='myOrders' element={<MyOrders />} />
           <Route path='manageOrders' element={<AdminRoute><ManageOrders /></AdminRoute>} />

@@ -47,6 +47,16 @@ const MyOrders = () => {
                     <LoaderComponent />
                     :
                     <div>
+                        <DashboardHeader
+                            title='My orders'
+                            setFilerType={setFilerType}
+                            filterType={filterType}
+                            value={[
+                                { value: 'delivered', label: 'Delivered' },
+                                { value: 'orders', label: 'Orders' },
+                            ]}
+                            filterTitle='myOrders'
+                        />
                         {
                             myOrders?.data?.length === 0 ?
                                 <div className='bg-orange-200 p-5 mt-6'>
@@ -56,16 +66,6 @@ const MyOrders = () => {
                                 </div>
                                 :
                                 <div>
-                                    <DashboardHeader
-                                        title='My orders'
-                                        setFilerType={setFilerType}
-                                        filterType={filterType}
-                                        value={[
-                                            { value: 'delivered', label: 'Delivered' },
-                                            { value: 'orders', label: 'Orders' },
-                                        ]}
-                                        filterTitle='myOrders'
-                                    />
                                     <div className='mt-6 grid grid-cols-1 lg:grid-cols-3 gap-5'>
 
                                         <div id='orderDetails' className={`${cardView?._id ? 'block' : 'hidden'} lg:order-2`}>

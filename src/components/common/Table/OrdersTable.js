@@ -10,7 +10,7 @@ const OrdersTable = ({ tableHead, tableData, cardView, setCardView, title }) => 
     const user = useSelector(state => state.user?.result)
     const dispatch = useDispatch();
 
-    // console.log(user.role === 'admin')
+    console.log(cardView)
 
     useEffect(() => {
         if (orderId || action) {
@@ -23,6 +23,20 @@ const OrdersTable = ({ tableHead, tableData, cardView, setCardView, title }) => 
                             dispatch(updateAllOrders({ orderId, action }))
                         })
                 }
+            }
+            else if (action === 'delivered') {
+                instance.put(`/orders?id=${orderId}&&action=${action}`)
+                    .then(res => {
+                        toast.warn('Order status been updated successfully')
+                        dispatch(updateAllOrders({ orderId, action }))
+                    })
+                instance.put(`/products`, {
+
+                })
+                    .then(res => {
+                        toast.warn('Order status been updated successfully')
+                        dispatch(updateAllOrders({ orderId, action }))
+                    })
             }
             else {
                 instance.put(`/orders?id=${orderId}&&action=${action}`)
@@ -41,7 +55,7 @@ const OrdersTable = ({ tableHead, tableData, cardView, setCardView, title }) => 
                     {
                         tableHead?.length > 0 &&
                         tableHead?.map((head, index) =>
-                            <th key={index} className='p-5'>{head}</th>)
+                            <th key={index} className={`p-5`}>{head}</th>)
                     }
                 </tr>
             </thead>
@@ -93,20 +107,25 @@ const OrdersTable = ({ tableHead, tableData, cardView, setCardView, title }) => 
                                             </select>
                                         </div>
                                         :
-                                        <i
-                                            onClick={() => {
-                                                const proceed = window.confirm('Are you sure you want to delete?')
-                                                if (proceed) {
-                                                    instance.delete(`/orders/${data?._id}`)
-                                                        .then(res => {
-                                                            console.log(res)
-                                                            toast.warn('Order has been deleted successfully')
-                                                            dispatch(updateOrders(data?._id))
-                                                        })
-                                                }
+                                        <div>
+                                            {
+                                                data?.status !== 'delivered' &&
+                                                <i
+                                                    onClick={() => {
+                                                        const proceed = window.confirm('Are you sure you want to delete?')
+                                                        if (proceed) {
+                                                            instance.delete(`/orders/${data?._id}`)
+                                                                .then(res => {
+                                                                    console.log(res)
+                                                                    toast.warn('Order has been deleted successfully')
+                                                                    dispatch(updateOrders(data?._id))
+                                                                })
+                                                        }
 
-                                            }}
-                                            className="fa-solid fa-trash-can cursor-pointer"></i>
+                                                    }}
+                                                    className="fa-solid fa-trash-can cursor-pointer"></i>
+                                            }
+                                        </div>
                                 }
                             </td>
                             <td className='p-5'>

@@ -49,6 +49,12 @@ const orderSlice = createSlice({
             }
             // console.log(payload)
         },
+        updatePayment: (state, { payload }) => {
+            const orderIndex = state.myOrders.data?.findIndex(order => order._id === payload.orderId)
+            state.myOrders.data[orderIndex].payment = payload
+            // order.payment = payload
+            console.log(payload, orderIndex)
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -78,6 +84,6 @@ const orderSlice = createSlice({
     },
 });
 
-export const { updateOrders, updateAllOrders } = orderSlice.actions
+export const { updateOrders, updateAllOrders, updatePayment } = orderSlice.actions
 
 export default orderSlice.reducer

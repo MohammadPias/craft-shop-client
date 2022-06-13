@@ -61,27 +61,27 @@ const ManageOrders = () => {
                     <LoaderComponent />
                     :
                     <div>
+                        <DashboardHeader
+                            title='Manage Orders'
+                            filterType={filterType}
+                            setFilerType={setFilerType}
+                            filterTitle='orders'
+                            value={[
+                                { value: 'allOrders', label: 'All Orders' },
+                                { value: 'updated', label: 'Updated' },
+                                { value: 'delivered', label: 'Delivered' },
+                                { value: 'processing', label: 'Processing' },
+                            ]}
+                        />
                         {
                             allOrders?.data?.length === 0 ?
                                 <div className='bg-orange-200 p-5 mt-6'>
                                     <h1 className="text-md font-bold text-orange-700 text-center">
-                                        You have no orders
+                                        No orders found
                                     </h1>
                                 </div>
                                 :
                                 <div>
-                                    <DashboardHeader
-                                        title='Manage Orders'
-                                        filterType={filterType}
-                                        setFilerType={setFilerType}
-                                        filterTitle='orders'
-                                        value={[
-                                            { value: 'allOrders', label: 'All Orders' },
-                                            { value: 'updated', label: 'Updated' },
-                                            { value: 'delivered', label: 'Delivered' },
-                                            { value: 'processing', label: 'Processing' },
-                                        ]}
-                                    />
                                     <div className='mt-6 grid grid-cols-1 lg:grid-cols-3 gap-5'>
 
                                         <div id='orderDetails' className={`${cardView?._id ? 'block' : 'hidden'} lg:order-2`}>

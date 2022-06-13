@@ -32,7 +32,7 @@ const Form = () => {
         address: '',
         paymentType: '',
     })
-    console.log(formData)
+    // console.log(formData)
     const pageComponents = () => {
 
 
@@ -64,7 +64,7 @@ const Form = () => {
                         <div className='p-3 lg:order-2'>
                             {
                                 formData.paymentType === 'visa' || formData.paymentType === 'masterCard' ?
-                                    <StripePayment />
+                                    <StripePayment cartEstimate={cart?.cartEstimate} />
                                     :
                                     <CartAccount disable={true} />
 

@@ -9,12 +9,12 @@ import userImg from '../../images/user.png'
 
 const Dashboard = () => {
     const [open, setOpen] = useState(false);
-    const [active, setActive] = useState('Dashboard');
+    const [active, setActive] = useState();
     const user = useSelector(selectUser);
     const { handleSignOut } = useFirebase();
     const cart = useSelector(state => state.cart.result)
 
-    console.log(user)
+    // console.log(user)
 
     const handleLogOut = () => {
         handleSignOut();
@@ -27,17 +27,24 @@ const Dashboard = () => {
     }
     return (
         <div className='flex'>
-            <div className={`side-bar h-screen ${open ? 'w-64 absolute z-50' : 'w-16 relative'} duration-500 bg-secondary `}>
+            <div className={`side-bar h-auto ${open ? 'w-64 absolute z-50' : 'w-16 relative'} duration-500 bg-secondary `}>
                 <i onClick={() => setOpen(!open)} className={`fa-solid fa-circle-arrow-left text-gray-500 text-2xl absolute top-12 -right-3 cursor-pointer ${!open && 'rotate-180'}`}></i>
 
                 <div className='flex items-center p-3 h-12 mt-3'>
-                    <img className='w-8 h-8' src={favicon} alt="" />
+                    <Link to='/' >
+                        <img className='w-8 h-8' src={favicon} alt="" />
+                    </Link>
                     <span className={`ml-4 text-xl font-medium ${!open && 'hidden'} text-gray-600`}>Craft Shop</span>
                 </div>
                 <ul className='mt-5'>
                     {
                         menus.map((menu, index) => {
-                            return <Link to={menu.path === 'shop' ? '/shop' : menu.path} key={index}>
+                            // console.log(menu.authorization !== user?.role)
+                            return <Link
+                                to={menu.path === 'shop' ? '/shop' : menu.path === 'dashboardHome' ? '/dashboard' : menu.path}
+                                key={index}
+                                className={`${menu.authorization !== user?.role && menu.authorization !== 'user' ? 'hidden' : 'block'}`}
+                            >
                                 <li
                                     className={`p-3 text-gray-500 z-10 flex items-center gap-3 h-12 hover:bg-secondary-deep cursor-pointer focus:border border-gray-500 ${active === menu.name && 'bg-secondary-deep border-l-4 border-tertiary shadow-sm'}`}
                                     onClick={() => setActive(menu.name)}
@@ -56,7 +63,11 @@ const Dashboard = () => {
                     <div className='container text-gray-600 grid grid-cols-1 lg:grid-cols-3 items-center gap-4'>
                         <div className=' lg:order-2'>
                             <h1 className="text-xl text-center font-bold">
-                                Admin Dashboard
+                                {
+                                    user?.email && user?.role === 'admin' ?
+                                        'Admin Dashboard' :
+                                        'User Dashboard'
+                                }
                             </h1>
                         </div>
                         <div className="relative lg:order-1 mx-auto">

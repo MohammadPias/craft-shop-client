@@ -13,7 +13,7 @@ const ManageUsers = () => {
     const [userType, setUserType] = useState('');
     const [totalPage, setTotalPage] = useState(0);
     const [currPage, setCurrPage] = useState(0);
-    const [adminCurrPage, setAdminCurrPage] = useState(0);
+    // const [adminCurrPage, setAdminCurrPage] = useState(0);
 
     const dispatch = useDispatch();
     const totalUsers = useSelector(count);
@@ -29,7 +29,7 @@ const ManageUsers = () => {
         if (userType === 'admins') {
             setTotalPage(Math.ceil(totalAdmins / userPerPage));
 
-            dispatch(getUsersAsync({ adminCurrPage, userPerPage, userType }));
+            dispatch(getUsersAsync({ currPage, userPerPage, userType }));
         }
         else {
             dispatch(getUsersAsync({ currPage, userPerPage, userType }));
@@ -37,7 +37,6 @@ const ManageUsers = () => {
         }
 
     }, [currPage,
-        adminCurrPage,
         dispatch,
         totalPage,
         userType,
@@ -75,7 +74,7 @@ const ManageUsers = () => {
                             currPage={currPage}
                             totalPage={totalPage}
                             setCurrPage={setCurrPage}
-                            setAdminCurrPage={setAdminCurrPage}
+                        // setAdminCurrPage={setAdminCurrPage}
                         />
                     </div>
             }

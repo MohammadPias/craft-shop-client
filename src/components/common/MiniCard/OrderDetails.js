@@ -50,14 +50,20 @@ const OrderDetails = ({ order }) => {
                 <h1 className="text-sm">Total:</h1>
                 <h1 className="text-sm">$ {order?.cartEstimate?.total}</h1>
             </div>
-            <div className='border-b border-b-gray-200 mb-2 py-2'>
+            <div className='border-b border-b-gray-200 mb-2 py-2 flex justify-between items-center'>
                 {
                     order?.payment?.amount ?
                         <button className='btn btn-primary' disabled>Paid</button>
                         :
-                        <Link to=''>
+                        <Link to={`/pay/${order?._id}`}>
                             <button className='btn btn-primary'>Pay</button>
                         </Link>
+                }
+                {
+                    order?.status === 'delivered' &&
+                    <Link to={`/feedback/${order?._id}`}>
+                        <button className='btn btn-primary'>Provide feedback</button>
+                    </Link>
                 }
             </div>
         </div>

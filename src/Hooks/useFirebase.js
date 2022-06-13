@@ -77,7 +77,7 @@ const useFirebase = () => {
                 updateUser(getUser, "POST");
                 dispatch(loginSuccess(getUser))
                 navigate(destination);
-                console.log(navigate(destination))
+                // console.log(navigate(destination))
                 toast.success('Registration Successful')
             })
             .catch((error) => {
@@ -103,7 +103,7 @@ const useFirebase = () => {
 
     // update firebase profile
     const updateFirebaseProfile = (role) => {
-        console.log(role)
+        // console.log(role)
         updateProfile(auth.currentUser, {
             role: role,
         }).then(() => {
@@ -155,7 +155,7 @@ const useFirebase = () => {
         if (user?.email) {
             instance.get(`/checkAmin/${user.email}`)
                 .then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
                     setAdmin(res.data?.admin)
                     if (res?.data?.admin) {
                         dispatch(setRole('admin'))

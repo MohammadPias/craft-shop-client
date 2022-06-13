@@ -10,6 +10,7 @@ const initialState = {
 export const getUsersAsync = createAsyncThunk(
     'users/fetchUsers',
     async ({ currPage, userPerPage, userType }) => {
+        console.log(currPage)
         const response = await instance.get(`/users?currPage=${currPage}&&userPerPage=${userPerPage}&&search=${userType}`)
             .then(res => res.data)
         return response;

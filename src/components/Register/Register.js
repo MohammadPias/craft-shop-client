@@ -59,14 +59,14 @@ const Register = () => {
 
                     name="password"
                     control={control}
-                    render={({ field }) => <input className="w-full border border-gray-300 focus:outline-none text-center mt-3 p-1" placeholder='password' {...field} />}
+                    render={({ field }) => <input type='password' className="w-full border border-gray-300 focus:outline-none text-center mt-3 p-1" placeholder='password' {...field} />}
                 />
                 <br />
                 <Controller
 
                     name="password2"
                     control={control}
-                    render={({ field }) => <input className="w-full border border-gray-300 focus:outline-none text-center mt-3 p-1" placeholder='re-enter password' {...field} />}
+                    render={({ field }) => <input type='password' className="w-full border border-gray-300 focus:outline-none text-center mt-3 p-1" placeholder='re-enter password' {...field} />}
                 />
                 <br />
                 <button type='submit' className='btn btn-primary w-full mt-3 p-1 hover:bg-tertiary transition duration-150'>Register</button>

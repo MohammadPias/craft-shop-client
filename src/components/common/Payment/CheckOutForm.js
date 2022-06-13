@@ -11,8 +11,9 @@ import { logEvent, Result, ErrorResult } from './util';
 import { useDispatch, useSelector } from 'react-redux';
 import { instance } from '../../../Api/ProductApi';
 import { setPayment } from '../../../features/cartSlice/cartSlice';
+import { updatePayment } from '../../../features/ordersSlice/orderSlice';
 
-const CheckOutForm = () => {
+const CheckOutForm = ({ cartEstimate, order }) => {
     const elements = useElements();
     const stripe = useStripe();
     const [name, setName] = useState('');
@@ -24,11 +25,12 @@ const CheckOutForm = () => {
     const [success, setSuccess] = useState(null);
 
     const dispatch = useDispatch()
-    const cartEstimate = useSelector(state => state.cart?.cartEstimate)
+    // const cartEstimate = useSelector(state => state.cart?.cartEstimate)
     const user = useSelector(state => state.user?.result)
 
 
     useEffect(() => {
+        // console.log(typeof (cartEstimate?.total))
         instance.post('/create-payment-intent', { amount: cartEstimate?.total })
             .then(res => setClientSecret(res.data?.clientSecret))
             .catch(error => console.log(error))
@@ -111,16 +113,24 @@ const CheckOutForm = () => {
             setErrorMessage(null);
             setProcessing(false);
             setSuccess('Your payment processed successfully');
-            const date = new Date().toLocaleString;
+            const date = new Date().toLocaleDateString;
             const payment = {
+                orderId: order?._id,
                 amount: paymentIntent.amount,
                 id: paymentIntent.id,
                 date: date,
             }
+
+            if (order?._id) {
+                instance.put('/updateOrders', {
+                    payment
+                }).then(res => console.log(res.data))
+            }
             dispatch(setPayment(payment))
+            dispatch(updatePayment(payment))
         }
     };
-    console.log(paymentMethod)
+    // console.log(paymentMethod)
 
     return (
         <form onSubmit={handleSubmit}>
@@ -206,7 +216,7 @@ const CheckOutForm = () => {
             {
                 processing ? 'processing...' :
                     <button className='btn btn-primary w-full h-12 mt-3' type="submit" disabled={!stripe || success}>
-                        Pay ${cartEstimate.total}
+                        Pay ${cartEstimate?.total}
                     </button>
             }
         </form>
