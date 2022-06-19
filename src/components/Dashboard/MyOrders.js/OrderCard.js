@@ -97,7 +97,7 @@ const OrderCard = ({ data, cardView, setCardView, title }) => {
                                             className="fa-solid fa-trash-can"></i>
                                     </div>
                             }
-                            <HashLink to='/dashboard/myOrders#orderDetails'>
+                            <HashLink to={user?.role === 'admin' && title === "manageOrders" ? '/dashboard/manageOrders#orderDetails' : '/dashboard/myOrders#orderDetails'}>
                                 <i
                                     onClick={() => {
                                         setCardView(item)

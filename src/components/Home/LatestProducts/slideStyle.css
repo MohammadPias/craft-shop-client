@@ -1,0 +1,26 @@
+/* .slick-slide {
+    padding: 20px;
+}
+
+.slick-prev {
+    left: -20px;
+    z-index: 9;
+}
+
+.slick-next {
+    right: -20px;
+    z-index: 9;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: rgb(67, 67, 67);
+}
+
+.slick-dots {
+    bottom: 0px;
+} */
+
+.slick-dots li.slick-active button:before {
+    color: rgb(67, 67, 67);
+}

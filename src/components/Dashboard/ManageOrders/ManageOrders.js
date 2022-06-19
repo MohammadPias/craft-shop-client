@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllOrders } from '../../../features/ordersSlice/orderSlice';
-import LoaderComponent from '../../common/Loder/Loder';
+import LoaderComponent from '../../common/Loader/Loader';
 import OrderDetails from '../../common/MiniCard/OrderDetails';
 import Pagination from '../../common/Pagination/Pagination';
 import OrdersTable from '../../common/Table/OrdersTable';

@@ -17,16 +17,16 @@ import ProductDetails from './components/Home/ProductDetails/ProductDetails';
 import Cart from './components/Cart/Cart';
 import { ToastContainer } from 'react-toastify';
 import Form from './components/common/Form/Form';
-import { useSelector } from 'react-redux';
 import RequireAuth from './components/RequireAuth/RequireAuth';
 import MyOrders from './components/Dashboard/MyOrders.js/MyOrders';
 import ManageOrders from './components/Dashboard/ManageOrders/ManageOrders';
 import AdminRoute from './components/AdminRoute/AdminRoute';
 import DashboardHome from './components/Dashboard/DashboardHome/DashboardHome';
 import UnAuthorized from './components/UnAutorized/UnAuthorized';
-import CheckOutForm from './components/common/Payment/CheckOutForm';
 import Pay from './components/Dashboard/Pay/Pay';
 import Feedback from './components/FeedBack/Feedback';
+// import UpdateProducts from './components/Dashboard/ManageProducts/UpdateProducts';
+const LazyLoad = React.lazy(() => import('./components/Dashboard/ManageProducts/UpdateProducts'))
 
 function App() {
   return (
@@ -55,6 +55,11 @@ function App() {
           <Route path='manageProducts' element={<AdminRoute><ManageProducts /></AdminRoute>} >
             <Route path='addProduct' element={<AdminRoute><ProductModal /></AdminRoute>} />
           </Route>
+          <Route path='manageProducts/:productId' element={<AdminRoute>
+            <React.Suspense fallback='loading...'>
+              <LazyLoad />
+            </React.Suspense>
+          </AdminRoute>} />
         </Route>
       </Routes>
       {/* <Footer /> */}

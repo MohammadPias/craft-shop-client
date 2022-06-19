@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllOrders, fetchOrders } from '../../../features/ordersSlice/orderSlice';
-import LoaderComponent from '../../common/Loder/Loder';
+import LoaderComponent from '../../common/Loader/Loader';
 import OrderDetails from '../../common/MiniCard/OrderDetails';
 import Pagination from '../../common/Pagination/Pagination';
 import OrdersTable from '../../common/Table/OrdersTable';
@@ -15,19 +15,20 @@ const MyOrders = () => {
     const [filterType, setFilerType] = useState();
 
     const dispatch = useDispatch();
-    const { myOrders, loading, error } = useSelector(state => ({ ...state.orders }))
+    const { myOrders, loading } = useSelector(state => ({ ...state.orders }))
     const { email } = useSelector(state => state.user?.result)
     const orderPerPage = 5;
     const totalOrders = myOrders?.totalOrders;
 
     // console.log(myOrders)
+
     useEffect(() => {
         if (filterType === 'delivered') {
-            setTotalPage(Math.ceil(totalOrders / orderPerPage))
+            setTotalPage(1)
             dispatch(fetchOrders({ currPage, orderPerPage, email, filterType }))
         }
         else {
-            setTotalPage(Math.ceil(totalOrders / orderPerPage))
+            setTotalPage(1)
             dispatch(fetchOrders({ currPage, orderPerPage, email, filterType }))
         }
 
@@ -39,7 +40,7 @@ const MyOrders = () => {
         filterType
     ])
 
-    console.log(filterType)
+    // console.log(filterType)
     return (
         <>
             {

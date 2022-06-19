@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const OrderDetails = ({ order }) => {
+    const user = useSelector(state => state?.user?.result)
 
     const CardRow = ({ data, title }) => {
         return (
@@ -16,7 +18,7 @@ const OrderDetails = ({ order }) => {
             <div>
                 <Link to={`/productDetails/${data?._id}`}>
                     <div className='flex space-x-2 items-center border-b border-b-gray-200'>
-                        <img className='h-8 w-8 object-contain' src={data?.img} alt="" />
+                        <img className='h-8 w-8 object-contain' src={`${data?.image ? `data:image/png;base64, ${data?.image}` : data?.img}`} alt="" />
                         <h1 className='text-sm text-blue-600'>{data?.title}</h1>
                     </div>
                 </Link>
@@ -32,7 +34,7 @@ const OrderDetails = ({ order }) => {
 
             <div className='flex items-center justify-between  border-b border-b-gray-200  h-7'>
                 <h1 className="">Date :</h1>
-                <h1 className="">{order?.createdAtDate?.split(',')[0]}</h1>
+                <h1 className="">{order?.createdAtDate}</h1>
             </div>
 
             {/* <h1 className='text-md font-medium'>Shipping</h1> */}
@@ -55,12 +57,17 @@ const OrderDetails = ({ order }) => {
                     order?.payment?.amount ?
                         <button className='btn btn-primary' disabled>Paid</button>
                         :
-                        <Link to={`/pay/${order?._id}`}>
-                            <button className='btn btn-primary'>Pay</button>
-                        </Link>
+                        <div>
+                            {
+                                order?.shipping?.email === user.email &&
+                                <Link to={`/pay/${order?._id}`}>
+                                    <button className='btn btn-primary'>Pay</button>
+                                </Link>
+                            }
+                        </div>
                 }
                 {
-                    order?.status === 'delivered' &&
+                    order?.status === 'delivered' && order?.shipping?.email === user.email &&
                     <Link to={`/feedback/${order?._id}`}>
                         <button className='btn btn-primary'>Provide feedback</button>
                     </Link>

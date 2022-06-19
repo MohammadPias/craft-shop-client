@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { adminCount, count, getUsersAsync, } from '../../../features/users/UsersSlice';
 import Card from '../../Card/Card';
-import LoaderComponent from '../../common/Loder/Loder';
+import LoaderComponent from '../../common/Loader/Loader';
 import ModalShow from '../../common/Modal/Modal';
 import Pagination from '../../common/Pagination/Pagination';
 import Table from '../../Table/Table';

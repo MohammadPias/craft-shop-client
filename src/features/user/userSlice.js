@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     result: {},
+
     loading: false,
     error: '',
 }
@@ -33,11 +34,23 @@ const userSlice = createSlice({
             // state.result.email = payload.email;
             // state.result.role = payload.role;
 
+        },
+        setIdToken: (state, { payload }) => {
+            // console.log(payload)
+            state.result.idToken = payload
         }
     }
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logOutUser, setRole, updateUser } = userSlice.actions;
+export const {
+    loginRequest,
+    loginSuccess,
+    loginFailure,
+    logOutUser,
+    setRole,
+    updateUser,
+    setIdToken,
+} = userSlice.actions;
 export const selectUser = state => state.user.result;
 
 export default userSlice.reducer

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getProductAsync } from '../../../features/products/productSlice';
-import LoaderComponent from '../../common/Loder/Loder';
+import LoaderComponent from '../../common/Loader/Loader';
 import ProductCard from '../../common/ProductCard/ProductCard';
 
 const HomeProducts = () => {
@@ -14,11 +14,11 @@ const HomeProducts = () => {
 
     useEffect(() => {
         dispatch(getProductAsync({ currPage, productPerPage, filterType }));
-        console.log('from home products')
+        // console.log('from home products')
     }, [dispatch])
     // console.log(products)
     return (
-        <div>
+        <div className='sm:container'>
             <div className="heading">
                 <h3>Top Products</h3>
             </div>
@@ -26,7 +26,7 @@ const HomeProducts = () => {
                 loading ?
                     <LoaderComponent />
                     :
-                    <div className='sm:container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-5 mt-6'>
+                    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5 p-5 lg:p-0 mt-5'>
                         {
                             result?.products?.slice(0, 8).map(product =>
                                 <ProductCard key={product._id} product={product} />
@@ -34,7 +34,7 @@ const HomeProducts = () => {
                         }
                     </div>
             }
-            <div className='sm:container flex justify-end px-5'>
+            <div className='flex justify-end mt-5'>
                 <Link to='shop'>
                     <button className="btn btn-primary h-10">See More</button>
                 </Link>

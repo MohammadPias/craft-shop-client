@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { instance } from '../../Api/ProductApi';
+import { updateProduct } from '../../features/products/productSlice';
+import NewForm from '../common/NewForm/NewForm';
 import ReactRating from '../common/ReactRating/ReactRating';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
@@ -13,9 +16,10 @@ const Feedback = () => {
 
 
     const { orderId } = useParams();
+    // const dispatch = useDispatch();
     // console.log(user)
 
-    // console.log(order)
+    console.log(order)
     useEffect(() => {
         instance.get(`/findOrder/${orderId}`)
             .then(res => setOrder(res.data))
@@ -30,7 +34,7 @@ const Feedback = () => {
             feedback: '',
             rating: 0,
         })
-        console.log(formData)
+        // console.log(formData)
         const handleOnSubmit = (e) => {
             e.preventDefault();
 
@@ -40,12 +44,22 @@ const Feedback = () => {
                 })
                     .then(res => {
                         console.log(res.data)
+                        if (res?.data?.modifiedCount > 0) {
+                            // dispatch(updateProduct({reviews: formData, id: item}))
+                            toast.success('Thank you for your kind feedback')
+                            setFormData({
+                                name: '',
+                                email: '',
+                                feedback: '',
+                                rating: 0,
+                            })
+                        }
                     })
             }
         }
         return (
             <div className='grid grid-cols-1 lg:grid-cols-2 border-b border-b-gray-200'>
-                <div>
+                <div className='flex justify-center items-center'>
                     <img className='w-2/3 mx-auto' src={item?.img} alt="" />
                 </div>
                 <div className=''>
@@ -54,56 +68,32 @@ const Feedback = () => {
                         <div className="text-center flex justify-center items-center border-b border-b-gray-200 pb-3">
                             <h2 className="text-md font-medium mr-3 text-gray-400">Category: {item?.category}</h2>
                             <h2 className="text-md font-medium mr-3 text-gray-400">Brand: {item?.brand}</h2>
-                            <h2 className="text-md font-medium mr-3 text-gray-400">Rating :
-                                <ReactRating rating={item?.rating} />
+                            <h2 className="text-md font-medium mr-3 text-gray-400">price: ${item?.price}
                             </h2>
                         </div>
                         <div className='p-5'>
                             <h1 className="text-lg">
                                 <ReactRating
+                                    size='big'
                                     setFormData={setFormData}
                                     formData={formData}
                                     change={true} />
                             </h1>
                         </div>
-                        <form className='p-5' onSubmit={handleOnSubmit}>
-                            <label className='text-gray-400 font-medium' htmlFor="name">Your Name</label>
-                            <br />
-                            <input
-                                name='name'
-                                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                value={formData?.name}
-                                className='border border-gray-300 rounded-sm w-full focus:outline outline-gray-400 p-1 mb-3 focus:shadow-md'
-                                type="text"
-                                id='name' />
-                            <br />
-                            <label className='text-gray-400 font-medium' htmlFor="email">Your Email</label>
-                            <br />
-                            <input
-                                name='email'
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                value={formData?.email}
-                                className='border border-gray-300 rounded-sm w-full focus:outline outline-gray-400 p-1 mb-3 focus:shadow-md'
-                                type="email"
-                                id='email' />
-                            <br />
-                            <label className='text-gray-400 font-medium' htmlFor="feedback">Feedback</label>
-                            <br />
-                            <textarea
-                                name='feedback'
-                                onChange={(e) => setFormData({ ...formData, feedback: e.target.value })}
-                                value={formData?.feedback}
-                                className='border border-gray-300 rounded-sm w-full focus:outline outline-gray-400 p-1 mb-3 focus:shadow-md'
-                                type="text"
-                                id='feedback' />
-                            <br />
-                            <button type='submit' className='btn btn-primary w-full py-2 rounded-sm'>Submit</button>
-                        </form>
+                        <div className='p-5'>
+                            <NewForm
+                                formData={formData}
+                                setFormData={setFormData}
+                                handleOnSubmit={handleOnSubmit}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
+
+
     return (
         <div>
             <Header />

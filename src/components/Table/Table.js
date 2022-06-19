@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { instance } from '../../Api/ProductApi';
 import { modalOpen } from '../../features/mySlice/mySlice';
 import { deleteSingleUser } from '../../features/users/UsersSlice';
-import LoaderComponent from '../common/Loder/Loder';
+import LoaderComponent from '../common/Loader/Loader';
 
 const Table = () => {
     const dispatch = useDispatch();
     const { loading, result } = useSelector((state) => ({ ...state.users }));
 
+    const [isOnline, set_isOnline] = useState(true);
+    let interval = null;
+
+    const InternetErrMessagenger = () => set_isOnline(navigator.onLine === true);
+
+    useEffect(() => {
+        const interval = setInterval(InternetErrMessagenger, 1000);
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+
 
     const handleActionOnChange = (e, user) => {
         e.preventDefault();
-        const { displayName, email, photoURL, role, _id, uid } = user;
+        const { email, _id, uid } = user;
         const value = e.target.value;
         if (value === 'edit') {
             dispatch(modalOpen({ email: email }))
@@ -59,7 +71,8 @@ const Table = () => {
                                         <tr key={index} className={`border border-gray-200 h-12 ${index % 2 && 'bg-secondary'} p-3`}>
                                             <td className='p-5 whitespace-nowrap'>{index + 1}</td>
                                             <td className='p-5 whitespace-nowrap'>{user?.displayName}</td>
-                                            <td className='p-5 whitespace-nowrap'>online
+                                            <td className='p-5 whitespace-nowrap'>
+                                                {isOnline === true ? "online" : "offline"}
                                             </td>
                                             <td className='p-5 whitespace-nowrap'>{user?.email}</td>
                                             <td className='p-5 whitespace-nowrap'>{user?.role === 'admin' ? 'admin' : 'user'}</td>

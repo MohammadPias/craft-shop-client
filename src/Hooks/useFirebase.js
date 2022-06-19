@@ -10,6 +10,7 @@ import {
     updateProfile,
     signInWithEmailAndPassword,
     deleteUser,
+    getIdToken,
 } from "firebase/auth";
 import {
     loginRequest,
@@ -17,6 +18,7 @@ import {
     loginFailure,
     logOutUser,
     setRole,
+    setIdToken,
 
 } from '../features/user/userSlice';
 import { useDispatch } from 'react-redux';
@@ -137,6 +139,9 @@ const useFirebase = () => {
     // Handle On Auth State change==========================
     useEffect(() => {
         onAuthStateChanged(auth, user => {
+            // console.log(user)
+            getIdToken(user)
+                .then(idToken => dispatch(setIdToken(idToken)))
             setUser(user)
         });
     }, [])

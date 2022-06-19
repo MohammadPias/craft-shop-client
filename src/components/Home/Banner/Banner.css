@@ -1,19 +1,23 @@
-.slick-arrow {
-    background-color: #c5986b;
-}
-
 .slick-prev {
-    left: 30px;
-    background-color: white;
+    left: 20px;
     z-index: 9;
 }
 
 .slick-next {
-    right: 30px;
-    background-color: white;
+    right: 33px;
     z-index: 9;
 }
 
+.slick-prev:before,
+.slick-next:before {
+    /* font-family: initial !important; */
+    color: gray;
+    font-size: 25px;
+    background-color: white;
+    padding: 15px 5px;
+
+}
+
 .slick-dots {
-    bottom: 30px;
+    bottom: -20px;
 }

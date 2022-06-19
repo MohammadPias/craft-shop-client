@@ -7,18 +7,22 @@ import ReactRating from '../ReactRating/ReactRating';
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
-    const { title, img, rating, price, _id } = product;
-    let ratingCount = 0;
-    if (rating.length > 0) {
-        for (const rate of rating) {
-            ratingCount = ratingCount + rate;
+    const { title, img, reviews, price, _id, image } = product;
+
+    let totalRating = 0;
+    let netRating = 0;
+
+    if (reviews?.length > 0) {
+        for (const review of reviews) {
+            totalRating += review.rating
         }
+        netRating = totalRating / reviews?.length
     }
     return (
         <div className='card-container  rounded-md p-3 border border-gray-200'>
             <ModalShow title={'productDetails'} />
             <div className='h-52 group relative'>
-                <img className='w-full h-full pb-12 rounded-md object-contain transform group-hover:scale-105 transition-all duration-500' src={img} alt="" />
+                <img className='w-full h-full pb-12 rounded-md object-contain transform group-hover:scale-105 transition-all duration-500' src={`${image ? `data:image/png;base64, ${image}` : img}`} alt="" />
                 <div className='h-10 w-full absolute bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-700 flex justify-center space-x-3'>
                     <div
                         onClick={() => dispatch(modalOpen())}
@@ -43,8 +47,8 @@ const ProductCard = ({ product }) => {
                 <h1 className='text-sm font-medium '>
                     Rating: <ReactRating
                         change={false}
-                        rating={ratingCount / rating?.length}
-                    /> ({rating?.length})
+                        rating={netRating}
+                    /> ({reviews?.length})
                 </h1>
             </div>
         </div>

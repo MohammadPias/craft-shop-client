@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductAsync } from '../../../features/products/productSlice';
-import LoaderComponent from '../../common/Loder/Loder';
+import LoaderComponent from '../../common/Loader/Loader';
 import Pagination from '../../common/Pagination/Pagination';
 import ProductCard from '../../common/ProductCard/ProductCard';
 import Footer from '../../Footer/Footer';

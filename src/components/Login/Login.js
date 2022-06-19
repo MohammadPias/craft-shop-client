@@ -11,7 +11,7 @@ const Login = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const destination = location?.state?.from || '/dashboard';
+    const destination = location?.state?.from || '/';
 
     const { control, handleSubmit } = useForm({
         defaultValues: {

@@ -1,9 +1,11 @@
 import React from 'react';
-import Form from '../common/Form/Form';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import About from './About/About';
 import Banner from './Banner/Banner';
+import Contact from './Contact/Contact';
 import HomeProducts from './HomeProducts/HomeProducts';
+import LatestProducts from './LatestProducts/LatestProducts';
 
 const Home = () => {
     return (
@@ -12,7 +14,9 @@ const Home = () => {
             <div className='min-h-screen sm:mt-14'>
                 <Banner />
                 <HomeProducts />
-                {/* <Form /> */}
+                <About />
+                <LatestProducts />
+                <Contact />
             </div>
             <Footer />
         </>

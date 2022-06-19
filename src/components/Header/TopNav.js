@@ -2,17 +2,25 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFirebase from '../../Hooks/useFirebase';
 import logo from '../../images/logo-ver.svg'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import userImg from '../../images/user.png';
+import { searchProductAsync } from '../../features/products/productSlice';
+import { HashLink } from 'react-router-hash-link';
 
 const TopNav = () => {
+    const [search, setSearch] = useState('');
     const [open, setOpen] = useState(false);
     const { handleSignOut } = useFirebase();
+    const dispatch = useDispatch();
     const productQuantity = useSelector(state => state.cart.totalProduct)
     const user = useSelector(state => state?.user?.result)
     const handleLogOut = () => {
         handleSignOut();
     }
+    const handleClick = (e) => {
+        // dispatch(searchProductAsync({ search: search }))
+    }
+    // console.log(search)
 
     return (
         <div className='border border-b-gray-300'>
@@ -21,8 +29,13 @@ const TopNav = () => {
                     <img className='w-2/5' src={logo} alt="" />
                 </div>
                 <div className="relative sm:order-1">
-                    <input className=' rounded-full p-2 outline-none text-center  border border-gray-300 shadow-sm' type="search" name="" id="" />
-                    <button className='absolute left-2 top-1.5 bg-primary h-7 w-7 rounded-full p-1 text-white'>
+                    <input
+                        onChange={(e) => setSearch(e.target.value)}
+                        className=' rounded-full p-2 outline-none text-center  border border-gray-300 shadow-sm' type="search" name="" id="" />
+
+                    <button
+                        onClick={() => handleClick()}
+                        className='absolute left-2 top-1.5 bg-primary h-7 w-7 rounded-full p-1 text-white'>
                         <i className="fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
@@ -90,8 +103,8 @@ const TopNav = () => {
                 <ul className={` text-center text-md font-medium text-gray-600 p-4 absolute top-full ${open ? 'left-0' : '-left-full sm:left-0'} z-10 w-full transition-all duration-1000 sm:flex sm:justify-center border-b border-gray-300 bg-secondary`}>
                     <li className='mt-3 sm:mt-1 px-5  hover:text-gray-400'><Link to='/' className='focus:font-bold focus:text-gray-800'>Home</Link></li>
                     <li className='mt-3 sm:mt-1 px-5  hover:text-gray-400'><Link to='/shop' className='focus:font-bold focus:text-gray-800'>Shop</Link></li>
-                    <li className='mt-3 sm:mt-1 px-5 hover:text-gray-400'><Link to='/about' className='focus:font-bold focus:text-gray-800'>About Us</Link></li>
-                    <li className='mt-3 sm:mt-1 px-5  hover:text-gray-400'><Link to='/contact' className='focus:font-bold focus:text-gray-800'>Contact Us</Link></li>
+                    <li className='mt-3 sm:mt-1 px-5 hover:text-gray-400'><HashLink to='/#about' className='focus:font-bold focus:text-gray-800'>About Us</HashLink></li>
+                    <li className='mt-3 sm:mt-1 px-5  hover:text-gray-400'><HashLink to='/#contact' className='focus:font-bold focus:text-gray-800'>Contact Us</HashLink></li>
                 </ul>
 
 

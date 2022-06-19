@@ -3,28 +3,31 @@ import Slider from "react-slick";
 import slide from '../../../images/banner.jpg'
 import slide2 from '../../../images/banner2.jpg'
 import slide3 from '../../../images/banner3.jpg'
+
 import './Banner.css'
 
 const Banner = () => {
     const settings = {
         dots: true,
         infinite: true,
-        speed: 3000,
+        speed: 1500,
         autoplay: true,
         slidesToShow: 1,
         slidesToScroll: 1
     };
+
+
     return (
-        <div className='sm:container'>
+        <div className=''>
             <Slider {...settings}>
                 <div>
-                    <img src={slide} alt="" />
+                    <img className='w-full' src={slide} alt="" />
                 </div>
                 <div>
-                    <img src={slide2} alt="" />
+                    <img className='w-full' src={slide2} alt="" />
                 </div>
                 <div>
-                    <img src={slide3} alt="" />
+                    <img className='w-full' src={slide3} alt="" />
                 </div>
             </Slider>
         </div>

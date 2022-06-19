@@ -12,17 +12,19 @@ const DashboardHeader = ({ title, setFilerType, filterType, value, filterTitle }
             {/* user management============ */}
             <div className='flex space-x-3 items-center'>
                 <p className='text-md font-bold text-gray-600'>{title}</p>
-
-                <Select
-                    className='w-full'
-                    name={filterTitle}
-                    defaultValue={filterType}
-                    onChange={(selectedOption) => {
-                        console.log(selectedOption.value)
-                        setFilerType(selectedOption.value)
-                    }}
-                    options={value}
-                />
+                {
+                    filterTitle &&
+                    <Select
+                        className='w-full'
+                        name={filterTitle}
+                        defaultValue={filterType}
+                        onChange={(selectedOption) => {
+                            console.log(selectedOption.value)
+                            setFilerType(selectedOption.value)
+                        }}
+                        options={value}
+                    />
+                }
             </div>
             {
                 title === 'User Management' &&

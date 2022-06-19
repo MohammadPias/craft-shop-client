@@ -38,7 +38,7 @@ const Cart = () => {
                                 <div className='hidden lg:block'>
                                     <TableComponent
                                         tableHead={heading}
-                                        tableData={cart.length > 0 && cart.map(product => [product.title, product.img, product.price, product.quantity, product._id, product])}
+                                        tableData={cart.length > 0 && cart.map(product => [product.title, product.img, product.price, product.quantity, product._id, product, product.image])}
                                     />
                                 </div>
 
