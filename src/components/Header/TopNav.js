@@ -64,7 +64,7 @@ const TopNav = () => {
                             }
                             {
                                 user?.email &&
-                                <Link to='/profile' className='hover:text-gray-400 border-b border-gray-300 p-2'>Profile</Link>
+                                <Link to='/dashboard/profile' className='hover:text-gray-400 border-b border-gray-300 p-2'>Profile</Link>
                             }
                             {
                                 user?.email &&

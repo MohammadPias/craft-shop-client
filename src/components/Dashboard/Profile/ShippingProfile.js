@@ -1,17 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Select from 'react-select';
+import { toast } from 'react-toastify';
+import { instance } from '../../../Api/ProductApi';
 
-const ShippingForm = ({ formData, setFormData }) => {
+const ShippingProfile = ({ shipping }) => {
+    const user = useSelector(state => state?.user?.result);
+    // const [shipping, setShipping] = useState({});
+    const { name, phone, country, email, shippingType, state, address } = shipping
+    const [formData, setFormData] = useState({
+        name: name,
+        phone: phone,
+        country: country,
+        email: email,
+        shippingType: shippingType,
+        state: state,
+        address: address,
+    });
+
+    // console.log(formData.phone)
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+        // console.log(formData)
+        instance.put(`/user/update?email=${user?.email}`, formData)
+            .then(res => {
+                if (res.data?.modifiedCount > 0) {
+                    toast.success('Shipping added successfully.')
+                }
+            })
+    }
+
+    // console.log(shipping, formData)
     return (
         <div>
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+            <form onSubmit={handleOnSubmit} className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
                 <div className='w-full'>
                     <input
                         required
                         onChange={(e) =>
                             setFormData({ ...formData, name: e.target.value })}
-                        value={formData?.name}
-                        // placeholder='Name'
+                        defaultValue={formData?.name}
+                        placeholder='Name'
                         name='name'
                         type="text"
                         className='w-full border border-gray-300 focus:outline-gray-300 h-12 text-center text-gray-500 rounded-md'
@@ -20,7 +50,7 @@ const ShippingForm = ({ formData, setFormData }) => {
                         required
                         onChange={(e) =>
                             setFormData({ ...formData, phone: e.target.value })}
-                        value={formData?.phone}
+                        defaultValue={formData?.phone}
                         placeholder='Phone'
                         name='phone'
                         type="number"
@@ -30,7 +60,7 @@ const ShippingForm = ({ formData, setFormData }) => {
                         required
                         onChange={(e) =>
                             setFormData({ ...formData, country: e.target.value })}
-                        value={formData?.country}
+                        defaultValue={formData?.country}
                         placeholder='Country'
                         name='country'
                         type="text"
@@ -40,10 +70,9 @@ const ShippingForm = ({ formData, setFormData }) => {
                 <div>
                     <input
                         required
-                        readOnly
                         onChange={(e) =>
                             setFormData({ ...formData, email: e.target.value })}
-                        value={formData?.email}
+                        defaultValue={formData?.email}
                         placeholder='Email'
                         name='email'
                         type="text"
@@ -52,7 +81,7 @@ const ShippingForm = ({ formData, setFormData }) => {
                     <Select
                         required
                         onChange={(selectedOption) => setFormData({ ...formData, shippingType: selectedOption.value })}
-                        defaultValue={formData?.shippingType}
+                        value={formData?.shippingType}
                         name='shippingType'
                         className='w-full text-center text-gray-500 mt-5'
                         options={[
@@ -64,26 +93,31 @@ const ShippingForm = ({ formData, setFormData }) => {
                         required
                         onChange={(e) =>
                             setFormData({ ...formData, state: e.target.value })}
-                        value={formData?.state}
+                        defaultValue={formData?.state}
                         placeholder='State'
                         name='state'
                         type="text"
                         className='w-full border border-gray-300 focus:outline-gray-300 h-12 text-center text-gray-500 mt-8 rounded-md'
                     />
                 </div>
-            </div>
-            <input
-                required
-                onChange={(e) =>
-                    setFormData({ ...formData, address: e.target.value })}
-                value={formData?.address}
-                placeholder='Address'
-                name='address'
-                type="text"
-                className='w-full border border-gray-300 focus:outline-gray-300 h-12 text-center text-gray-500 mt-5 rounded-md'
-            />
+                <div className='lg:col-span-2'>
+                    <input
+                        required
+                        onChange={(e) =>
+                            setFormData({ ...formData, address: e.target.value })}
+                        defaultValue={formData?.address}
+                        placeholder='Address'
+                        name='address'
+                        type="text"
+                        className='w-full border border-gray-300 focus:outline-gray-300 h-12 text-center text-gray-500 rounded-md'
+                    />
+                </div>
+                <div className='lg:col-span-2 mx-auto'>
+                    <button className='btn btn-primary py-2'>Update</button>
+                </div>
+            </form>
         </div>
     );
 };
 
-export default ShippingForm;
+export default ShippingProfile;

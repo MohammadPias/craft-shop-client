@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ShippingForm from './ShippingForm';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
@@ -13,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
     const [page, setPage] = useState(0)
+    const [shipping, setShipping] = useState({})
     const pageTitle = ['Sign up', 'Shipping Address', 'Select a payment method'];
     const user = useSelector(state => state.user.result)
     const dispatch = useDispatch();
@@ -20,12 +21,19 @@ const Form = () => {
 
     const navigate = useNavigate()
 
+    useEffect(() => {
+        instance(`/user/find?email=${user?.email}`)
+            .then(res => {
+                // console.log(res.data)
+                setShipping(res?.data?.shipping)
+            })
+    }, [user?.email])
 
-
+    console.log(shipping, user)
     const [formData, setFormData] = useState({
         name: user?.displayName,
         email: user?.email,
-        phone: '',
+        phone: shipping?.phone,
         shippingType: '',
         country: '',
         state: '',
@@ -91,7 +99,11 @@ const Form = () => {
 
                                                     const order = { ...cart, shipping: formData }
                                                     instance.post('/orders', order)
+
+                                                    instance.put(`/user/update?email=${user?.email}`, formData)
+
                                                     toast.success('Your order has been placed successfully.')
+
                                                     navigate('/dashboard/myOrders')
                                                     dispatch(clearCart())
                                                 }

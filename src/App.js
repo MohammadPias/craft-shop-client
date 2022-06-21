@@ -25,6 +25,7 @@ import DashboardHome from './components/Dashboard/DashboardHome/DashboardHome';
 import UnAuthorized from './components/UnAutorized/UnAuthorized';
 import Pay from './components/Dashboard/Pay/Pay';
 import Feedback from './components/FeedBack/Feedback';
+import Profile from './components/Dashboard/Profile/Profile';
 // import UpdateProducts from './components/Dashboard/ManageProducts/UpdateProducts';
 const LazyLoad = React.lazy(() => import('./components/Dashboard/ManageProducts/UpdateProducts'))
 
@@ -51,6 +52,7 @@ function App() {
           {/* <Route path='dashboardHome' element={<AdminRoute><DashboardHome /></AdminRoute>} /> */}
           <Route path='manageUsers' element={<AdminRoute><ManageUsers /></AdminRoute>} />
           <Route path='myOrders' element={<MyOrders />} />
+          <Route path='profile' element={<Profile />} />
           <Route path='manageOrders' element={<AdminRoute><ManageOrders /></AdminRoute>} />
           <Route path='manageProducts' element={<AdminRoute><ManageProducts /></AdminRoute>} >
             <Route path='addProduct' element={<AdminRoute><ProductModal /></AdminRoute>} />

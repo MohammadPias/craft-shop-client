@@ -25,6 +25,10 @@
     @apply bg-primary text-white
   }
 
+  .btn-secondary {
+    @apply border-2 border-primary text-gray-700 px-3
+  }
+
   .warning {
     @apply h-8 bg-red-100 text-red-400 text-center font-medium
   }

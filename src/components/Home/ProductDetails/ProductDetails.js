@@ -37,6 +37,7 @@ const ProductDetails = ({ value }) => {
         brand,
         img,
         reviews,
+        image,
     } = product;
 
 
@@ -99,7 +100,7 @@ const ProductDetails = ({ value }) => {
                             <button onClick={() => navigate(-1)} className="btn btn-primary h-12 mt-5">Go Back</button>
                             <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 my-5'>
                                 <div>
-                                    <img className='w-full h-full object-contain' src={img} alt="" />
+                                    <img className='w-full h-full object-contain' src={image ? `data:image/png;base64, ${image}` : img} alt="" />
                                 </div>
                                 <div className='col-span-2 text-gray-500 lg:px-10'>
                                     <h5 className='text-lg font-medium'>Price: <span className='font-bold text-gray-700'>${price}</span></h5>

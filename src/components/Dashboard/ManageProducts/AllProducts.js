@@ -22,7 +22,12 @@ const AllProducts = () => {
     useEffect(() => {
         setTotalPage(Math.ceil(totalProduct / productPerPage))
         dispatch(getProductAsync({ currPage, productPerPage, filterType }))
-    }, [currPage, productPerPage, filterType, totalProduct, dispatch])
+    }, [
+        currPage,
+        productPerPage,
+        filterType,
+        totalProduct,
+        dispatch])
 
     const handleDelete = (id) => {
         const proceed = window.confirm("Are sure you want to delete this product?")

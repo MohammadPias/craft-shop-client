@@ -11,6 +11,7 @@ import {
     signInWithEmailAndPassword,
     deleteUser,
     getIdToken,
+    updatePassword,
 } from "firebase/auth";
 import {
     loginRequest,
@@ -104,14 +105,30 @@ const useFirebase = () => {
     };
 
     // update firebase profile
-    const updateFirebaseProfile = (role) => {
-        // console.log(role)
+    const updateFirebaseProfile = (form) => {
+        console.log(form)
         updateProfile(auth.currentUser, {
-            role: role,
+            ...form
         }).then(() => {
-
+            toast.success('Your profile has been updated successfully.')
         }).catch((error) => {
 
+        });
+    }
+    // console.log(auth.currentUser)
+
+    // update Password
+    const handleUpdatePassword = (password) => {
+        console.log(password)
+        const user = auth.currentUser;
+        // const newPassword = getASecureRandomPassword();
+
+        updatePassword(user, password).then(() => {
+            // Update successful.
+            toast.success('Password has been changed successfully.')
+        }).catch((error) => {
+            // An error ocurred
+            // ...
         });
     }
 
@@ -143,8 +160,9 @@ const useFirebase = () => {
             getIdToken(user)
                 .then(idToken => dispatch(setIdToken(idToken)))
             setUser(user)
+            dispatch(loginSuccess(user))
         });
-    }, [])
+    }, [dispatch, auth])
 
     // update user to database=======================
     const updateUser = async (newUser, method) => {
@@ -178,7 +196,8 @@ const useFirebase = () => {
         handleRegistration,
         handleSignIn,
         handleUserDelete,
-        updateFirebaseProfile
+        updateFirebaseProfile,
+        handleUpdatePassword,
     }
 };
 
