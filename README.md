@@ -1,8 +1,4 @@
-# Getting Started with Create React App and Redux
-
-[Live Link](https://craft-shop-43971.web.app/)
-
-## Craft-Shop
+## Craft-Shop  [Live Link](https://craft-shop-43971.web.app/)
 
 Craft Shop is an online handy craft shop that sells artistic handy craft products of different catagories.
 
