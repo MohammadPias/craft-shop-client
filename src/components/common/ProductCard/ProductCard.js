@@ -24,19 +24,19 @@ const ProductCard = ({ product }) => {
             <div className='h-52 group relative'>
                 <img className='w-full h-full pb-12 rounded-md object-contain transform group-hover:scale-105 transition-all duration-500' src={`${image ? `data:image/png;base64, ${image}` : img}`} alt="" />
                 <div className='h-10 w-full absolute bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-700 flex justify-center space-x-3'>
-                    <div
+                    {/* <div
                         onClick={() => dispatch(modalOpen())}
                         className="h-10 w-10 bg-secondary rounded-full shadow-md flex justify-center items-center text-gray-500">
-                        <i className="fa-solid fa-eye"></i>
+                        <i className="fa-solid fa-bag-shopping"></i>
                     </div>
                     <div
                         className="h-10 w-10 bg-secondary rounded-full shadow-md flex justify-center items-center text-gray-500">
                         <i className="fa-solid fa-heart"></i>
-                    </div>
+                    </div> */}
                     <Link to={`/productDetails/${_id}`} >
                         <div
                             className="h-10 w-10 bg-secondary rounded-full shadow-md flex justify-center items-center text-gray-500">
-                            <i className="fa-solid fa-bag-shopping"></i>
+                            <i className="fa-solid fa-eye"></i>
                         </div>
                     </Link>
                 </div>

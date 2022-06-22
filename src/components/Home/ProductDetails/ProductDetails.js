@@ -140,7 +140,7 @@ const ProductDetails = ({ value }) => {
                                                     dispatch(addToCart({ product, quantity }))
                                                     dispatch(countCart())
                                                 }}
-                                                className="btn btn-primary h-12 rounded-full">Add Card</button>
+                                                className="btn btn-primary h-12 rounded-full">Add to Cart</button>
                                         </div>
                                     </div>
                                 </div>

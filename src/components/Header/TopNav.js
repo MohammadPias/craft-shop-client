@@ -76,6 +76,14 @@ const TopNav = () => {
                             }
                         </div>
                     </div>
+                    {/* <div className='relative mr-7'>
+                        <Link to='/cart'>
+                            <i className="fa-solid fa-heart cursor-pointer"></i>
+                        </Link>
+                        <div className="w-6 h-6 bg-primary rounded-full text-xs font-bold p-1 text-white absolute -top-2 -right-4 flex justify-center items-center">
+                            {productQuantity}
+                        </div>
+                    </div> */}
                     <div className='relative'>
                         <Link to='/cart'>
                             <i className="fa-solid fa-bag-shopping cursor-pointer"></i>
