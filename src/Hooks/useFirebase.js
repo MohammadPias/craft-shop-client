@@ -170,7 +170,9 @@ const useFirebase = () => {
             method: method,
             url: '/users',
             data: newUser
-        }).then(res => console.log(res))
+        }).then(res => {
+
+        })
     };
 
     // check admin

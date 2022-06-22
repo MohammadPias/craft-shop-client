@@ -34,7 +34,7 @@ const HomeProducts = () => {
                         }
                     </div>
             }
-            <div className='flex justify-end mt-5'>
+            <div className='flex justify-end lg:mt-5 container'>
                 <Link to='shop'>
                     <button className="btn btn-primary h-10">See More</button>
                 </Link>
