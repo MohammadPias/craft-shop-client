@@ -12,19 +12,14 @@ const Dashboard = () => {
     const [active, setActive] = useState();
     const user = useSelector(selectUser);
     const { handleSignOut } = useFirebase();
-    const cart = useSelector(state => state.cart.result)
 
     // console.log(user)
 
     const handleLogOut = () => {
         handleSignOut();
     }
-    let productQuantity = 0;
-    if (cart.length > 0) {
-        for (const product of cart) {
-            productQuantity = productQuantity + product.qty;
-        }
-    }
+    const productQuantity = useSelector(state => state.cart.totalProduct)
+
     return (
         <div className='flex'>
             <div className={`side-bar h-auto ${open ? 'w-64 absolute z-50' : 'w-16 relative'} duration-500 bg-secondary`}>

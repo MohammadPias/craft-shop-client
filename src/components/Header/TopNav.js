@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useFirebase from '../../Hooks/useFirebase';
 import logo from '../../images/logo-ver.svg'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import userImg from '../../images/user.png';
-import { searchProductAsync } from '../../features/products/productSlice';
 import { HashLink } from 'react-router-hash-link';
 
 const TopNav = () => {
     const [search, setSearch] = useState('');
     const [open, setOpen] = useState(false);
     const { handleSignOut } = useFirebase();
-    const dispatch = useDispatch();
+
     const productQuantity = useSelector(state => state.cart.totalProduct)
     const user = useSelector(state => state?.user?.result)
+
     const handleLogOut = () => {
         handleSignOut();
     }
