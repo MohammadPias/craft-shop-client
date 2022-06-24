@@ -6,11 +6,11 @@ import LoaderComponent from '../common/Loader/Loader';
 const AdminRoute = ({ children }) => {
     const { result, loading } = useSelector(state => ({ ...state.user }))
     const location = useLocation();
-    // console.log(result)
+    console.log(result.role)
     if (loading) {
         <LoaderComponent />
     }
-    if (result?.role === 'admin') {
+    if (result?.role === 'admin' && result?.email) {
         return children;
     } else {
         return <Navigate to="/unauthorized" state={{ from: location }} replace />;

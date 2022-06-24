@@ -14,9 +14,8 @@ const HomeProducts = () => {
 
     useEffect(() => {
         dispatch(getProductAsync({ currPage, productPerPage, filterType }));
-        // console.log('from home products')
-    }, [dispatch])
-    // console.log(products)
+
+    }, [dispatch, currPage, filterType, productPerPage])
     return (
         <div className='sm:container'>
             <div className="heading">

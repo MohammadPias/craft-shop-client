@@ -43,7 +43,7 @@ const Footer = () => {
                             <h6 className='font-bold'>Address</h6>
                             <div className='flex items-center mt-5 space-x-3 font-medium'>
                                 <i className="fa-solid fa-location-dot"></i>
-                                <small>504/3, Fatema Villa, 3rd floor, Uttara, Dahaka</small>
+                                <small>511/2, Azaam Villa, 3rd floor, Kandirpar, Cumilla</small>
                             </div>
                             <div className='flex items-center mt-3 space-x-3 font-medium'>
                                 <i className="fa-solid fa-phone"></i>

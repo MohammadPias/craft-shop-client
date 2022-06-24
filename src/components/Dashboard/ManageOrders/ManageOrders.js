@@ -16,7 +16,7 @@ const ManageOrders = () => {
     const [filterType, setFilerType] = useState();
     const dispatch = useDispatch();
 
-    const { allOrders, loading, error } = useSelector(state => state.orders);
+    const { allOrders, loading } = useSelector(state => state.orders);
     const totalOrders = allOrders.totalOrders;
     const updatedOrders = allOrders.updatedOrders;
     const deliveredOrders = allOrders.deliveredOrders;

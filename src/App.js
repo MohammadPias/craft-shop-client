@@ -47,9 +47,8 @@ function App() {
         <Route path='pay/:orderId' element={<Pay />} />
         <Route path='feedback/:orderId' element={<Feedback />} />
 
-        <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} >
+        <Route path='dashboard' element={<Dashboard />} >
           <Route index element={<DashboardHome />} />
-          {/* <Route path='dashboardHome' element={<AdminRoute><DashboardHome /></AdminRoute>} /> */}
           <Route path='manageUsers' element={<AdminRoute><ManageUsers /></AdminRoute>} />
           <Route path='myOrders' element={<MyOrders />} />
           <Route path='profile' element={<Profile />} />

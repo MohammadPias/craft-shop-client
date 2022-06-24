@@ -18,7 +18,7 @@ const position = {
 
 const Map = () => {
     const onLoad = marker => {
-        console.log('marker: ', marker)
+        // console.log('marker: ', marker)
     }
     return (
         <LoadScript

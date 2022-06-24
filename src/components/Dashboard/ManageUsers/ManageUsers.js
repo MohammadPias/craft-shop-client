@@ -13,17 +13,13 @@ const ManageUsers = () => {
     const [userType, setUserType] = useState('');
     const [totalPage, setTotalPage] = useState(0);
     const [currPage, setCurrPage] = useState(0);
-    // const [adminCurrPage, setAdminCurrPage] = useState(0);
 
     const dispatch = useDispatch();
     const totalUsers = useSelector(count);
     const totalAdmins = useSelector(adminCount);
-    // console.log(totalUsers, totalAdmins)
     const { loading, result } = useSelector((state) => ({ ...state.users }));
 
     const userPerPage = 3;
-    // console.log('Current Page', currPage)
-    // console.log(totalUsers, totalAdmins)
 
     useEffect(() => {
         if (userType === 'admins') {

@@ -50,7 +50,7 @@ const useFirebase = () => {
                 }
                 updateUser(getUser, 'PUT')
                 dispatch(loginSuccess(getUser))
-                navigate(destination)
+                navigate(destination, { replace: true })
             }).catch((error) => {
                 dispatch(loginFailure(error.message))
             });
@@ -79,8 +79,7 @@ const useFirebase = () => {
                 });
                 updateUser(getUser, "POST");
                 dispatch(loginSuccess(getUser))
-                navigate(destination);
-                // console.log(navigate(destination))
+                navigate(destination, { replace: true });
                 toast.success('Registration Successful')
             })
             .catch((error) => {
@@ -97,7 +96,7 @@ const useFirebase = () => {
                 const user = userCredential.user;
                 setUser(user)
                 dispatch(loginSuccess(user))
-                navigate(destination)
+                navigate(destination, { replace: true })
             })
             .catch((error) => {
                 dispatch(loginFailure(error.message))
@@ -156,11 +155,12 @@ const useFirebase = () => {
     // Handle On Auth State change==========================
     useEffect(() => {
         onAuthStateChanged(auth, user => {
-            // console.log(user)
-            getIdToken(user)
-                .then(idToken => dispatch(setIdToken(idToken)))
-            setUser(user)
-            dispatch(loginSuccess(user))
+            if (user?.email) {
+                getIdToken(user)
+                    .then(idToken => dispatch(setIdToken(idToken)))
+                setUser(user)
+                dispatch(loginSuccess(user))
+            }
         });
     }, [dispatch, auth])
 

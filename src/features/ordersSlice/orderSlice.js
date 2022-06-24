@@ -8,7 +8,6 @@ const initialState = {
     loading: false,
     error: '',
 };
-// const { idToken } = useSelector(state => state?.user?.result)
 
 export const fetchOrders = createAsyncThunk(
     'orders/fetchOrders',

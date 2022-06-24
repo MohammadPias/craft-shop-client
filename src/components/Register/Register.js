@@ -12,7 +12,7 @@ const Register = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
-    const destination = location?.state?.from || '/dashboard';
+    const destination = location.state?.from?.pathname || '/login';
 
     const { control, handleSubmit } = useForm({
         defaultValues: {
