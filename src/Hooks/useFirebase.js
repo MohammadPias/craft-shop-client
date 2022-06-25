@@ -20,6 +20,7 @@ import {
     logOutUser,
     setRole,
     setIdToken,
+    updateUserImage,
 
 } from '../features/user/userSlice';
 import { useDispatch } from 'react-redux';
@@ -156,6 +157,13 @@ const useFirebase = () => {
     useEffect(() => {
         onAuthStateChanged(auth, user => {
             if (user?.email) {
+                instance.get(`/user/find?email=${user?.email}`)
+                    .then(res => {
+                        if (res?.data?.photoURL) {
+                            dispatch(updateUserImage(res?.data?.photoURL))
+                        }
+                    })
+
                 getIdToken(user)
                     .then(idToken => dispatch(setIdToken(idToken)))
                 setUser(user)

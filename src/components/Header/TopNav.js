@@ -47,7 +47,7 @@ const TopNav = () => {
                                 user?.email &&
                                 <div className='flex flex-col text-center items-center justify-between border-b border-gray-300 p-2'>
                                     {user?.photoURL ?
-                                        <img className='h-14 w-14 rounded-full' src={user?.photoURL} alt="" />
+                                        <img className='h-14 w-14 rounded-full' src={user?.photoURL?.startsWith('http') ? `${user?.photoURL}` : `data:image/png;base64, ${user?.photoURL}`} alt="" />
                                         :
                                         <img className='h-14 w-14 rounded-full' src={userImg} alt="" />
                                     }

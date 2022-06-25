@@ -69,3 +69,5 @@ function App() {
 }
 
 export default App;
+
+// REACT_APP_BASE_URL='https://polar-beach-38800.herokuapp.com'

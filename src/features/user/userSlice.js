@@ -28,11 +28,8 @@ const userSlice = createSlice({
         setRole: (state, action) => {
             state.result.role = action.payload;
         },
-        updateUser: (state, { payload }) => {
-            // state.result = { ...state.result, role: payload }
-            // state.result.displayName = payload.displayName;
-            // state.result.email = payload.email;
-            // state.result.role = payload.role;
+        updateUserImage: (state, { payload }) => {
+            state.result = { ...state.result, photoURL: payload }
 
         },
         setIdToken: (state, { payload }) => {
@@ -48,7 +45,7 @@ export const {
     loginFailure,
     logOutUser,
     setRole,
-    updateUser,
+    updateUserImage,
     setIdToken,
 } = userSlice.actions;
 export const selectUser = state => state.user.result;

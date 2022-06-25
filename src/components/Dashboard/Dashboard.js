@@ -75,9 +75,9 @@ const Dashboard = () => {
                             <div className='relative group'>
                                 <div className='flex gap-x-3'>
                                     <h1 className='text-xl font-medium'>{user?.displayName?.split(" ")[0]}</h1>
-                                    <div className='h-10 w-10'>
+                                    <div className='h-10 w-10 overflow-hidden'>
                                         {user?.photoURL ?
-                                            <img className='rounded-full' src={user?.photoURL} alt="" />
+                                            <img className='rounded-full object-contain w-full' src={user?.photoURL?.startsWith('http') ? `${user?.photoURL}` : `data:image/png;base64, ${user?.photoURL}`} alt="" />
                                             :
                                             <img className='rounded-full' src={userImg} alt="" />
                                         }

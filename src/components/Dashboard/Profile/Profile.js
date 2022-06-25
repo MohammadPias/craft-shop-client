@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { instance } from '../../../Api/ProductApi';
+import { updateUserImage } from '../../../features/user/userSlice';
 import useFirebase from '../../../Hooks/useFirebase';
 import userPhoto from '../../../images/user.png'
 import ShippingProfile from './ShippingProfile';
@@ -10,8 +11,12 @@ import ShippingProfile from './ShippingProfile';
 const Profile = () => {
     const [shipping, setShipping] = useState({});
     const [isPassChange, setIsPassChange] = useState(false)
+    const [photo, setPhoto] = useState(null);
+    const [image, setImage] = useState(null)
     const user = useSelector(state => state?.user?.result)
     const { handleUpdatePassword, updateFirebaseProfile } = useFirebase()
+
+    const dispatch = useDispatch();
     // console.log(shipping, user?.email)
     const [data, setData] = useState({
         displayName: user?.displayName,
@@ -21,7 +26,6 @@ const Profile = () => {
         password2: null,
     })
 
-
     useEffect(() => {
         instance.get(`/user/find?email=${user?.email}`)
             .then(res => {
@@ -30,10 +34,32 @@ const Profile = () => {
             })
     }, [user?.email])
 
+    useEffect(() => {
+        if (photo && user?.email) {
+            if (photo.size <= 307200) {
+                const formData = new FormData();
+                formData.append('photoURL', photo)
+
+                instance.put(`/user/profile?email=${user?.email}`, formData)
+                    .then(res => {
+                        console.log(res?.data?.result?.modifiedCount, res?.data?.photoURL)
+                        if (res?.data?.result?.modifiedCount > 0) {
+                            dispatch(updateUserImage(res?.data?.photoURL))
+                            const form = { photoURL: res?.data?.photoURL }
+                            updateFirebaseProfile(form)
+                        }
+                    })
+            }
+            else {
+                alert('Please upload image less than 300 KB')
+            }
+        }
+    }, [photo, user?.email, dispatch])
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // console.log(data)
-        const form = { displayName: data?.displayName, photoURL: data?.photoURL }
+        const form = { displayName: data?.displayName }
         updateFirebaseProfile(form)
 
     }
@@ -56,7 +82,20 @@ const Profile = () => {
                 <div className=''>
                     <h1 className="text-center text-lg font-medium text-gray-500">Profile</h1>
                     <div className='bg-gray-50 border border-gray-200 p-3 mt-2 rounded-md'>
-                        <img className='h-24 w-24 rounded-full mx-auto mb-3' src={user?.photoURL ? user?.photoURL : userPhoto} alt="" />
+                        <div className='h-24 w-24 rounded-full mx-auto mb-3 relative '>
+                            <div className='overflow-hidden h-24 w-24 rounded-full'>
+
+                                <img className='w-full object-contain rounded-full' src={user?.photoURL?.startsWith('https') ? `${user?.photoURL}` : user?.photoURL ? `data:image/png;base64, ${user?.photoURL}` : userPhoto} alt="" />
+                            </div>
+
+                            <div className='absolute -right-8 top-8'>
+                                <label htmlFor="profile">
+                                    <i
+                                        className="fa-solid fa-camera text-2xl text-gray-600"></i>
+                                </label>
+                                <input onChange={e => setPhoto(e.target.files[0])} className='hidden' type="file" name="photoURL" id="profile" />
+                            </div>
+                        </div>
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label className='text-sm text-gray-400 font-medium' htmlFor='name'>Name :</label>
@@ -81,7 +120,7 @@ const Profile = () => {
                                     className='w-full border border-gray-200 py-1 focus:outline-gray-300 rounded-md text-gray-500 text-center'
                                 />
                             </div>
-                            <div>
+                            {/* <div>
                                 <label className='text-sm text-gray-400 font-medium' htmlFor='photoURL'>PhotoURL :</label>
                                 <input
                                     onChange={e => setData({ ...data, photoURL: e.target.value })}
@@ -91,7 +130,7 @@ const Profile = () => {
                                     id='photoURL'
                                     className='w-full border border-gray-200 py-1 focus:outline-gray-300 rounded-md text-gray-500 text-center'
                                 />
-                            </div>
+                            </div> */}
                             <button type='submit' className="btn btn-primary text-sm py-1.5 rounded-md w-full mt-3">update</button>
                         </form>
                         <button onClick={() => setIsPassChange(!isPassChange)} className="btn btn-secondary text-sm py-1.5 rounded-md w-full mt-3">Change Password</button>
