@@ -20,7 +20,7 @@ export const fetchOrders = createAsyncThunk(
                 Authorization: `Bearer ${state?.user?.result?.idToken}`
             }
         })
-        return AuthAxios.get(`/myOrders?currPage=${currPage}&&orderPerPage=${orderPerPage}&&email=${email}&&filterType=${filterType}`)
+        return AuthAxios.get(`/orders/myOrders?currPage=${currPage}&&orderPerPage=${orderPerPage}&&email=${email}&&filterType=${filterType}`)
             .then(res => res.data)
     }
 )

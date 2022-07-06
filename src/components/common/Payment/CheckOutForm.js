@@ -31,7 +31,7 @@ const CheckOutForm = ({ cartEstimate, order }) => {
 
     useEffect(() => {
         // console.log(typeof (cartEstimate?.total))
-        instance.post('/create-payment-intent', { amount: cartEstimate?.total })
+        instance.post('payment/create-payment-intent', { amount: cartEstimate?.total })
             .then(res => setClientSecret(res.data?.clientSecret))
             .catch(error => console.log(error))
     }, [user, cartEstimate])
@@ -122,7 +122,7 @@ const CheckOutForm = ({ cartEstimate, order }) => {
             }
 
             if (order?._id) {
-                instance.put('/updateOrders', {
+                instance.put('/orders/updatePayment', {
                     payment
                 }).then(res => console.log(res.data))
             }

@@ -22,7 +22,7 @@ const Form = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        instance(`/user/find?email=${user?.email}`)
+        instance(`/users/find?email=${user?.email}`)
             .then(res => {
                 // console.log(res.data)
                 setShipping(res?.data?.shipping)
@@ -100,7 +100,7 @@ const Form = () => {
                                                     const order = { ...cart, shipping: formData }
                                                     instance.post('/orders', order)
 
-                                                    instance.put(`/user/update?email=${user?.email}`, formData)
+                                                    instance.put(`/users/update?email=${user?.email}`, formData)
 
                                                     toast.success('Your order has been placed successfully.')
 

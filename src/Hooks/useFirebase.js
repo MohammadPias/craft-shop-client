@@ -157,7 +157,7 @@ const useFirebase = () => {
     useEffect(() => {
         onAuthStateChanged(auth, user => {
             if (user?.email) {
-                instance.get(`/user/find?email=${user?.email}`)
+                instance.get(`/users/find?email=${user?.email}`)
                     .then(res => {
                         if (res?.data?.photoURL) {
                             dispatch(updateUserImage(res?.data?.photoURL))
@@ -186,7 +186,7 @@ const useFirebase = () => {
     // check admin
     useEffect(() => {
         if (user?.email) {
-            instance.get(`/checkAmin/${user.email}`)
+            instance.get(`users/checkAmin/${user.email}`)
                 .then(res => {
                     // console.log(res.data)
                     setAdmin(res.data?.admin)

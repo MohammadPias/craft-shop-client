@@ -21,7 +21,7 @@ const Feedback = () => {
 
     console.log(order)
     useEffect(() => {
-        instance.get(`/findOrder/${orderId}`)
+        instance.get(`/orders/findOrder/${orderId}`)
             .then(res => setOrder(res.data))
     }, [orderId])
 

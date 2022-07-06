@@ -23,7 +23,7 @@ const ShippingProfile = ({ shipping }) => {
     const handleOnSubmit = (e) => {
         e.preventDefault();
         // console.log(formData)
-        instance.put(`/user/update?email=${user?.email}`, formData)
+        instance.put(`/users/update?email=${user?.email}`, formData)
             .then(res => {
                 if (res.data?.modifiedCount > 0) {
                     toast.success('Shipping added successfully.')

@@ -27,7 +27,7 @@ const Profile = () => {
     })
 
     useEffect(() => {
-        instance.get(`/user/find?email=${user?.email}`)
+        instance.get(`/users/find?email=${user?.email}`)
             .then(res => {
                 // console.log(res.data.shipping)
                 setShipping(res?.data?.shipping)
@@ -40,7 +40,7 @@ const Profile = () => {
                 const formData = new FormData();
                 formData.append('photoURL', photo)
 
-                instance.put(`/user/profile?email=${user?.email}`, formData)
+                instance.put(`/users/profile?email=${user?.email}`, formData)
                     .then(res => {
                         console.log(res?.data?.result?.modifiedCount, res?.data?.photoURL)
                         if (res?.data?.result?.modifiedCount > 0) {

@@ -10,7 +10,7 @@ const Pay = () => {
     const { orderId } = useParams();
     // console.log(order)
     useEffect(() => {
-        instance.get(`/findOrder/${orderId}`)
+        instance.get(`/orders/findOrder/${orderId}`)
             .then(res => setOrder(res.data))
     }, [orderId])
     return (
