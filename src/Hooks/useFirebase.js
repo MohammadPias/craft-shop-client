@@ -21,11 +21,13 @@ import {
     setRole,
     setIdToken,
     updateUserImage,
+    checkAdmin,
 
 } from '../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { instance } from '../Api/ProductApi';
 import { toast } from 'react-toastify';
+import Cookies from 'js-cookie'
 
 initializeAuthentication();
 
@@ -137,6 +139,7 @@ const useFirebase = () => {
     const handleSignOut = () => {
         signOut(auth).then(() => {
             dispatch(logOutUser())
+            Cookies.remove("idToken")
         }).catch((error) => {
         })
     }
@@ -165,8 +168,12 @@ const useFirebase = () => {
                     })
 
                 getIdToken(user)
-                    .then(idToken => dispatch(setIdToken(idToken)))
+                    .then(idToken => {
+                        // dispatch(setIdToken(idToken))
+                        Cookies.set("idToken", idToken)
+                    })
                 setUser(user)
+
                 dispatch(loginSuccess(user))
             }
         });
@@ -186,21 +193,12 @@ const useFirebase = () => {
     // check admin
     useEffect(() => {
         if (user?.email) {
-            instance.get(`users/checkAmin/${user.email}`)
-                .then(res => {
-                    // console.log(res.data)
-                    setAdmin(res.data?.admin)
-                    if (res?.data?.admin) {
-                        dispatch(setRole('admin'))
-                    }
-                    else {
-                        dispatch(setRole('user'))
-                    }
-                })
+            dispatch(checkAdmin(user?.email))
         }
     }, [user?.email, dispatch])
 
     return {
+        user,
         handleGoogleSignIn,
         handleSignOut,
         handleRegistration,

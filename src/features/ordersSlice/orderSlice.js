@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import axios from 'axios';
-import { instance } from '../../Api/ProductApi';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { authInstance, instance } from '../../Api/ProductApi';
 
 const initialState = {
     myOrders: {},
@@ -11,16 +10,9 @@ const initialState = {
 
 export const fetchOrders = createAsyncThunk(
     'orders/fetchOrders',
-    async ({ currPage, orderPerPage, email, filterType }, { getState }) => {
-        console.log(getState().user?.result?.idToken, currPage)
-        const state = getState()
-        const AuthAxios = axios.create({
-            baseURL: process.env.REACT_APP_BASE_URL,
-            headers: {
-                Authorization: `Bearer ${state?.user?.result?.idToken}`
-            }
-        })
-        return AuthAxios.get(`/orders/myOrders?currPage=${currPage}&&orderPerPage=${orderPerPage}&&email=${email}&&filterType=${filterType}`)
+    async ({ currPage, orderPerPage, email, filterType }) => {
+        // console.log(getState().user?.result?.idToken, currPage)
+        return authInstance.get(`/orders/myOrders?currPage=${currPage}&&orderPerPage=${orderPerPage}&&email=${email}&&filterType=${filterType}`)
             .then(res => res.data)
     }
 )

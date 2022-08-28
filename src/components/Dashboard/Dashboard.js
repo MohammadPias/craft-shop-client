@@ -38,7 +38,7 @@ const Dashboard = () => {
                             return <Link
                                 to={menu.path === 'shop' ? '/shop' : menu.path === 'dashboardHome' ? '/dashboard' : menu.path}
                                 key={index}
-                                className={`${menu.authorization !== user?.role && menu.authorization !== 'user' ? 'hidden' : 'block'}`}
+                                className={`${menu.authorization === "admin" && user?.isAmin && "hidden"}`}
                             >
                                 <li
                                     className={`p-3 text-gray-500 z-10 flex items-center gap-3 h-12 hover:bg-secondary-deep cursor-pointer focus:border border-gray-500 ${active === menu.name && 'bg-secondary-deep border-l-4 border-tertiary shadow-sm'}`}
@@ -59,7 +59,7 @@ const Dashboard = () => {
                         <div className=' lg:order-2'>
                             <h1 className="text-xl text-center font-bold">
                                 {
-                                    user?.email && user?.role === 'admin' ?
+                                    user?.email && user?.isAdmin ?
                                         'Admin Dashboard' :
                                         'User Dashboard'
                                 }

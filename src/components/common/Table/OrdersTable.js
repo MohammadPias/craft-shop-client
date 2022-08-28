@@ -10,8 +10,6 @@ const OrdersTable = ({ tableHead, tableData, cardView, setCardView, title }) => 
     const user = useSelector(state => state.user?.result)
     const dispatch = useDispatch();
 
-    console.log(cardView)
-
     useEffect(() => {
         if (orderId || action) {
             if (action === 'delete') {
@@ -67,6 +65,7 @@ const OrdersTable = ({ tableHead, tableData, cardView, setCardView, title }) => 
                         // const date = new Date()
                         // console.log((data?.updateStatusTime))
                         // console.log(new Date().toLocaleString())
+                        // console.log(data)
                         return <tr key={index} className={`border border-gray-200 h-12 p-3 ${cardView._id === data._id && 'bg-gray-50'}`}>
                             <td className='p-5'>
                                 <h2>#{data._id}</h2>

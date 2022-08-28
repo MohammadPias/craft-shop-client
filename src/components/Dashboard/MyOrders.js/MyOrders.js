@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllOrders, fetchOrders } from '../../../features/ordersSlice/orderSlice';
+import { fetchOrders } from '../../../features/ordersSlice/orderSlice';
 import LoaderComponent from '../../common/Loader/Loader';
 import OrderDetails from '../../common/MiniCard/OrderDetails';
 import Pagination from '../../common/Pagination/Pagination';
@@ -17,10 +17,11 @@ const MyOrders = () => {
     const dispatch = useDispatch();
     const { myOrders, loading } = useSelector(state => ({ ...state.orders }))
     const { email } = useSelector(state => state.user?.result)
+    // const { result } = useSelector(state => ({ ...state.user }))
     const orderPerPage = 5;
     const totalOrders = myOrders?.totalOrders;
 
-    // console.log(myOrders)
+    // console.log(result.isAdmin)
 
     useEffect(() => {
         if (filterType === 'delivered') {

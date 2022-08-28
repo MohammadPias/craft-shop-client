@@ -29,7 +29,6 @@ const Form = () => {
             })
     }, [user?.email])
 
-    console.log(shipping, user)
     const [formData, setFormData] = useState({
         name: user?.displayName,
         email: user?.email,
@@ -40,7 +39,7 @@ const Form = () => {
         address: '',
         paymentType: '',
     })
-    // console.log(formData)
+
     const pageComponents = () => {
 
 
@@ -98,6 +97,7 @@ const Form = () => {
                                                 if (page === pageTitle.length - 1) {
 
                                                     const order = { ...cart, shipping: formData }
+                                                    console.log(order)
                                                     instance.post('/orders', order)
 
                                                     instance.put(`/users/update?email=${user?.email}`, formData)

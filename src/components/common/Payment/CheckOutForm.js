@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { instance } from '../../../Api/ProductApi';
 import { setPayment } from '../../../features/cartSlice/cartSlice';
 import { updatePayment } from '../../../features/ordersSlice/orderSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CheckOutForm = ({ cartEstimate, order }) => {
     const elements = useElements();
@@ -23,6 +24,8 @@ const CheckOutForm = ({ cartEstimate, order }) => {
     const [clientSecret, setClientSecret] = useState('');
     const [processing, setProcessing] = useState(false);
     const [success, setSuccess] = useState(null);
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
     // const cartEstimate = useSelector(state => state.cart?.cartEstimate)
@@ -122,9 +125,15 @@ const CheckOutForm = ({ cartEstimate, order }) => {
             }
 
             if (order?._id) {
+
                 instance.put('/orders/updatePayment', {
                     payment
-                }).then(res => console.log(res.data))
+                }).then(res => {
+                    console.log(res.data)
+                    if (res?.data?.modifiedCount > 0) {
+                        navigate(-1)
+                    }
+                })
             }
             dispatch(setPayment(payment))
             dispatch(updatePayment(payment))

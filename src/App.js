@@ -47,7 +47,7 @@ function App() {
         <Route path='pay/:orderId' element={<Pay />} />
         <Route path='feedback/:orderId' element={<Feedback />} />
 
-        <Route path='dashboard' element={<Dashboard />} >
+        <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} >
           <Route index element={<DashboardHome />} />
           <Route path='manageUsers' element={<AdminRoute><ManageUsers /></AdminRoute>} />
           <Route path='myOrders' element={<MyOrders />} />
@@ -69,5 +69,3 @@ function App() {
 }
 
 export default App;
-
-// REACT_APP_BASE_URL='https://polar-beach-38800.herokuapp.com'
